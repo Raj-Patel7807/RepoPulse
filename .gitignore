@@ -38,15 +38,29 @@ build/
 ### Mac OS ###
 .DS_Store
 
-# Maven target directory
+# Maven
 /target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
 
 # Logs
 *.log
 
-# OS files
+# OS
+.DS_Store
 Thumbs.db
 
-# Environment / secrets (VERY IMPORTANT)
+# Env / Secrets
 .env
 config.properties
+
+# Editors
+.vscode/
+
+# Other
+.kotlin
