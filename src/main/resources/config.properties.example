@@ -1,0 +1,4 @@
+db.url = jdbc:postgresql://localhost:5432/repopulse_db
+db.username = username
+db.password = db_password
+app.name = RepoPulse
