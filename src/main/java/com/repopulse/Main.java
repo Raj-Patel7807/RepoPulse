@@ -1,7 +1,11 @@
 package com.repopulse;
 
+import com.repopulse.cli.Menu;
+
 public class Main {
-    static void main(String[] args) {
-        System.out.println("Raj");
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+
+        menu.start();
     }
 }
