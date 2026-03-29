@@ -2,69 +2,67 @@ package com.repopulse.cli;
 
 import com.repopulse.model.Repository;
 import com.repopulse.service.RepositoryService;
-import com.repopulse.service.impl.RepositoryServiceImpl;
 import com.repopulse.util.Session;
-
 import java.util.List;
-import java.util.Scanner;
 
 public class RepositoryCLI {
 
-    private Scanner sc = new Scanner(System.in);
-    // private RepositoryService repoService = new RepositoryServiceImpl();
+    private final RepositoryService repoService = new RepositoryService();
 
     public void showRepoMenu() {
-        while (true) {
-            System.out.println("\n=== Repository Menu ===");
+        while(true) {
+            MenuUtils.clearScreen();
 
+            System.out.println("\n=== Repository Menu ===");
             System.out.println("1. Create Repository");
-            System.out.println("2. View My Repositories");
+            System.out.println("2. List My Repositories");
             System.out.println("3. Open Repository");
             System.out.println("4. Back");
 
-            System.out.print("Enter Choice: ");
-            int choice = sc.nextInt();
+            int choice = MenuUtils.getIntInput("Enter choice: ");
 
-            switch (choice) {
-                case 1:
-                    createRepository();
-                    break;
-                case 2:
-                    listRepositories();
-                    break;
-                case 3:
-                    openRepository();
-                    break;
-                case 4:
-                    return;
-                default:
-                    System.out.println("Invalid Choice...");
+            if(choice == 1) {
+                createRepository();
+            } else if(choice == 2) {
+                listRepositories();
+            } else if(choice == 3) {
+                openRepository();
+            } else if(choice == 4) {
+                return;
+            } else {
+                System.out.println("Invalid choice!");
+                MenuUtils.waitForEnter();
             }
         }
     }
 
     private void createRepository() {
-        sc.nextLine();
+        String name = MenuUtils.getStringInput("Repository Name: ");
+        boolean isPublic = MenuUtils.getStringInput("Public? (true/false): ").equalsIgnoreCase("true");
+        long userId = Session.getCurrentUser().getUserId();
 
-        System.out.print("Enter Repository Name: ");
-        String name = sc.nextLine();
+        repoService.createRepository(name, userId, isPublic);
 
-        System.out.print("Enter Description: ");
-        String desc = sc.nextLine();
-
-        System.out.print("Public? (true/false): ");
-        boolean isPublic = sc.nextBoolean();
-
-        System.out.println("Pending");
+        System.out.println("Repository Created!");
+        MenuUtils.waitForEnter();
     }
 
     private void listRepositories() {
-        System.out.println("Pending");
+        long userId = Session.getCurrentUser().getUserId();
+
+        List<Repository> repos = repoService.getRepositoriesByUser(userId);
+
+        if(repos.isEmpty()) {
+            System.out.println("No Repositories Found.");
+        }
+        for(Repository r : repos) {
+            System.out.println(r.getRepoId() + " | " + r.getRepoName());
+        }
+        MenuUtils.waitForEnter();
     }
 
     private void openRepository() {
-        System.out.print("Enter Repository ID: ");
-        long repoId = sc.nextLong();
-        System.out.println("Pending");
+        long repoId = MenuUtils.getIntInput("Enter Repository ID: ");
+        new CommitCLI().showCommitMenu(repoId);
     }
 }
