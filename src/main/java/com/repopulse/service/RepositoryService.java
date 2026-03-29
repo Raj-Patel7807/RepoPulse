@@ -4,8 +4,26 @@ import com.repopulse.model.Repository;
 
 import java.util.List;
 
-public interface RepositoryService {
-    void createRepo(String name, String desc, long userId);
+public class RepositoryServiceImpl implements RepositoryService {
+    private RepositoryDAO repoDAO;
 
-    List<Repository> getUserRepos(long userId);
+    public RepositoryServiceImpl(RepositoryDAO repoDAO) {
+        this.repoDAO = repoDAO;
+    }
+
+    @Override
+    public void createRepo(String name, String desc, long userId) {
+        Repository repo = new Repository();
+        repo.setRepoName(name);
+        repo.setRepoDesc(desc);
+        repo.setRepoOwnerUserId(userId);
+        repo.setRepoVisibilityType("PUBLIC");
+
+        repoDAO.createRepository(repo);
+    }
+
+    @Override
+    public List<Repository> getUserRepos(long userId) {
+        return repoDAO.getRepositoriesByUser(userId);
+    }
 }

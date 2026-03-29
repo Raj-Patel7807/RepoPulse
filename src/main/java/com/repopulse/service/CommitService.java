@@ -4,8 +4,25 @@ import com.repopulse.model.Commit;
 
 import java.util.List;
 
-public interface CommitService {
-    void addCommit(String msg, long repoId, long userId);
+public class CommitServiceImpl implements CommitService {
+    private CommitDAO commitDAO;
 
-    List<Commit> getHistory(long repoId);
+    public CommitServiceImpl(CommitDAO commitDAO) {
+        this.commitDAO = commitDAO;
+    }
+
+    @Override
+    public void addCommit(String msg, long repoId, long userId) {
+        Commit commit = new Commit();
+        commit.setRepoId(repoId);
+        commit.setAuthorUserId(userId);
+        commit.setCommitMessage(msg);
+
+        commitDAO.createCommit(commit);
+    }
+
+    @Override
+    public List<Commit> getHistory(long repoId) {
+        return commitDAO.getCommitsByRepo(repoId);
+    }
 }
