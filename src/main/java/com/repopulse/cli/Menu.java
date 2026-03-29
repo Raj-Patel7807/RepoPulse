@@ -1,70 +1,68 @@
 package com.repopulse.cli;
 
-import com.repopulse.cli.AuthCLI;
 import com.repopulse.util.Session;
-import com.repopulse.cli.RepositoryCLI;
-
-import java.util.Scanner;
 
 public class Menu {
-    private Scanner sc = new Scanner(System.in);
-    private AuthCLI authCLI = new AuthCLI();
-    private RepositoryCLI repositoryCLI = new RepositoryCLI();
 
-    public void showAuthMenu() {
-        System.out.println("\n=== RepoPulse ===");
-        System.out.println("1. Login");
-        System.out.println("2. SignUp");
-        System.out.println("3. Exit");
-
-        System.out.print("Enter Choice: ");
-        int choice = sc.nextInt();
-
-        if(choice == 1) {
-            authCLI.login();
-        } else if(choice == 2) {
-            authCLI.signup();
-        } else if(choice == 3) {
-            System.out.println("Exiting....");
-            System.exit(0);
-        } else {
-            System.out.println("Invalid Choice...");
-        }
-    }
-
-    public void showUserMenu() {
-        System.out.println("\n=== Dashboard ===");
-        System.out.println("Welcome, " + Session.getCurrentUser().getUsername());
-
-        System.out.println("1. Repository Menu");
-        System.out.println("2. View Profile");
-        System.out.println("3. Logout");
-
-        int choice = sc.nextInt();
-
-        if(choice == 1) {
-            repositoryCLI.showRepoMenu();
-        } else if(choice == 2) {
-            System.out.println("View Profile - Not Implemented...");
-        } else if(choice == 3) {
-            Session.logout();
-        } else {
-            System.out.println("Invalid Choice...");
-        }
-    }
-
-    private void logout() {
-        Session.logout();
-        System.out.println("Logged out successfully!");
-    }
+    private final AuthCLI authCLI = new AuthCLI();
+    private final RepositoryCLI repoCLI = new RepositoryCLI();
+    private final ProfileCLI profileCLI = new ProfileCLI();
 
     public void start() {
         while(true) {
             if(Session.getCurrentUser() == null) {
                 showAuthMenu();
             } else {
-                showUserMenu();
+                showDashboard();
             }
+        }
+    }
+
+    private void showAuthMenu() {
+        MenuUtils.clearScreen();
+
+        System.out.println("\n=== RepoPulse ===");
+        System.out.println("1. Login");
+        System.out.println("2. Signup");
+        System.out.println("3. Exit");
+
+        int choice = MenuUtils.getIntInput("Enter choice: ");
+
+        if(choice == 1) {
+            authCLI.login();
+        } else if(choice == 2) {
+            authCLI.signup();
+        } else if(choice == 3) {
+            System.out.println("Goodbye!");
+            System.exit(0);
+        } else {
+            System.out.println("Invalid choice!");
+            MenuUtils.waitForEnter();
+        }
+    }
+
+    private void showDashboard() {
+        MenuUtils.clearScreen();
+
+        System.out.println("\n=== Dashboard ===");
+        System.out.println("Welcome, " + Session.getCurrentUser().getUsername());
+        System.out.println("1. Repositories");
+        System.out.println("2. Profile");
+        System.out.println("3. Logout");
+
+        int choice = MenuUtils.getIntInput("Enter choice: ");
+
+        if(choice == 1) {
+            repoCLI.showRepoMenu();
+        } else if(choice == 2) {
+            profileCLI.showProfileMenu();
+        } else if(choice == 3) {
+            Session.logout();
+            System.out.println("Logged out successfully!");
+            MenuUtils.waitForEnter();
+        } else {
+            System.out.println("Invalid choice!");
+            MenuUtils.waitForEnter();
         }
     }
 }
