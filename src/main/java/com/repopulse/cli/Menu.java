@@ -2,12 +2,14 @@ package com.repopulse.cli;
 
 import com.repopulse.cli.AuthCLI;
 import com.repopulse.util.Session;
+import com.repopulse.cli.RepositoryCLI;
 
 import java.util.Scanner;
 
 public class Menu {
     private Scanner sc = new Scanner(System.in);
     private AuthCLI authCLI = new AuthCLI();
+    private RepositoryCLI repositoryCLI = new RepositoryCLI();
 
     public void showAuthMenu() {
         System.out.println("\n=== RepoPulse ===");
@@ -34,20 +36,17 @@ public class Menu {
         System.out.println("\n=== Dashboard ===");
         System.out.println("Welcome, " + Session.getCurrentUser().getUsername());
 
-        System.out.println("1. Create Repository");
-        System.out.println("2. View My Repositories");
-        System.out.println("3. Commit");
-        System.out.println("4. Logout");
+        System.out.println("1. Repository Menu");
+        System.out.println("2. View Profile");
+        System.out.println("3. Logout");
 
         int choice = sc.nextInt();
 
         if(choice == 1) {
-            System.out.println("Create Repo - Not Implemented...");
+            repositoryCLI.showRepoMenu();
         } else if(choice == 2) {
-            System.out.println("View Repo - Not Implemented...");
+            System.out.println("View Profile - Not Implemented...");
         } else if(choice == 3) {
-            System.out.println("Commit - Not Implemented...");
-        } else if(choice == 4) {
             Session.logout();
         } else {
             System.out.println("Invalid Choice...");
