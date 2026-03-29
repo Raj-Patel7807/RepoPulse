@@ -2,23 +2,23 @@ package com.repopulse.cli;
 
 import java.util.Scanner;
 
-public class MenuUtil {
+public class MenuUtils {
+
     private static final Scanner sc = new Scanner(System.in);
 
     public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+
     }
 
     public static int getIntInput(String prompt) {
         System.out.print(prompt);
-        while (!sc.hasNextInt()) {
+        while(!sc.hasNextInt()) {
             System.out.println("Please enter a valid number.");
             sc.next();
             System.out.print(prompt);
         }
         int val = sc.nextInt();
-        sc.nextLine(); // consume newline
+        sc.nextLine();
         return val;
     }
 
