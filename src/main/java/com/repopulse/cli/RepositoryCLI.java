@@ -63,6 +63,30 @@ public class RepositoryCLI {
 
     private void openRepository() {
         long repoId = MenuUtils.getIntInput("Enter Repository ID: ");
-        new CommitCLI().showCommitMenu(repoId);
+        System.out.println(repoId);
+        Repository repo = repoService.getRepositoryById(repoId);
+
+        while(true) {
+            MenuUtils.clearScreen();
+
+            System.out.println("\n=== Repository: " + repo.getRepoName() + " ===");
+            System.out.println("1. Commit Menu");
+            System.out.println("2. Branch Menu");
+            System.out.println("3. Back");
+
+            int choice = MenuUtils.getIntInput("Enter choice: ");
+
+            if(choice == 1) {
+                new CommitCLI().showCommitMenu(repoId);
+            } else if(choice == 2) {
+                BranchCLI branchCli = new BranchCLI(repoId);
+                branchCli.showMenu();
+            } else if(choice == 3) {
+                return;
+            } else {
+                System.out.println("Invalid choice!");
+                MenuUtils.waitForEnter();
+            }
+        }
     }
 }
