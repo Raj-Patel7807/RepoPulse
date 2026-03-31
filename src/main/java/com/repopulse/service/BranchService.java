@@ -19,8 +19,6 @@ public class BranchService {
     public Branch createBranch(long repoId, String branchName, long headCommitId) throws SQLException {
         BranchValidator.validateBranchName(branchName);
         BranchValidator.validateRepoId(repoId);
-        System.out.println("Hello");
-        System.out.println(repoId);
 
         if(branchDAO.existsByRepoAndName(repoId, branchName)) {
             throw new IllegalArgumentException("Branch name already exists in this repository");
