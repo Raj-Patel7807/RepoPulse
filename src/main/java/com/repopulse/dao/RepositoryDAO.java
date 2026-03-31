@@ -47,8 +47,6 @@ public class RepositoryDAO {
                 }
             }
 
-            System.out.println("Repository created successfully!");
-
         } catch(SQLException e) {
             if(e.getMessage().contains("unique")) {
                 System.out.println("Repository name already exists for this user!");
