@@ -1,8 +1,7 @@
 package com.repopulse.dao;
 
-import com.repopulse.model.Commit;
-
-import java.util.List;
+import com.repopulse.commit.model.Commit;
+import com.repopulse.commit.dao.CommitDAO;
 
 public class CommitDAOTest {
 
