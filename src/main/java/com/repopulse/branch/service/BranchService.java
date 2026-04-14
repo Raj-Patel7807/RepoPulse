@@ -16,7 +16,7 @@ public class BranchService {
         this.branchDAO = new BranchDAO();
     }
 
-    public Branch createBranch(long repoId, String branchName, long headCommitId) throws SQLException {
+    public Branch createBranch(long repoId, String branchName, long headCommitId) {
         BranchValidator.validateBranchName(branchName);
         BranchValidator.validateRepoId(repoId);
 
@@ -36,7 +36,7 @@ public class BranchService {
         return branch;
     }
 
-    public List<Branch> getBranchesByRepo(long repoId) throws SQLException {
+    public List<Branch> getBranchesByRepo(long repoId) {
         return branchDAO.getBranchesByRepo(repoId);
     }
 
