@@ -22,6 +22,18 @@ public class CliUtils {
         return val;
     }
 
+    public static long getLongInput(String prompt) {
+        System.out.print(prompt);
+        while(!sc.hasNextLong()) {
+            System.out.println("Please enter a valid number.");
+            sc.next();
+            System.out.print(prompt);
+        }
+        long val = sc.nextLong();
+        sc.nextLine();
+        return val;
+    }
+
     public static String getStringInput(String prompt) {
         System.out.print(prompt);
         return sc.nextLine();
