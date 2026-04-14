@@ -33,7 +33,7 @@ public class RepositoryService {
     }
 
     public Repository createRepository(String name, long ownerUserId, boolean isPublic) {
-        validateRepoName(name);
+//        validateRepoName(name);
 
         Repository repo = new Repository();
         repo.setRepoName(name);
@@ -144,12 +144,17 @@ public class RepositoryService {
         repositoryDAO.addStar(star);
     }
 
+    public List<Repository> getStarredRepos(long userId) {
+        List<Repository> repos = repositoryDAO.getStarredRepos(userId);
+        return repos;
+    }
+
     public void unstarRepository(long userId, long repositoryId) {
         repositoryDAO.removeStar(userId, repositoryId);
     }
 
-    public List<RepoStar> getRepositoryStars(long repositoryId) {
-        return repositoryDAO.getStarsByRepository(repositoryId);
+    public int getRepositoryStars(long repositoryId) {
+        return repositoryDAO.getStarCountByRepository(repositoryId);
     }
 
     public RepoTag createTag(long repositoryId, long commitId, String tagName, String tagDescription) {

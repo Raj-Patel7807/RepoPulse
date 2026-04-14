@@ -53,11 +53,7 @@ public class RepositoryDAO {
             }
 
         } catch(SQLException e) {
-            if(e.getMessage().contains("unique")) {
-                System.out.println("Repository name already exists for this user!");
-            } else {
-                e.printStackTrace();
-            }
+            throw new RuntimeException("Creating Repo Failed, Check RepoName", e);
         }
     }
 
@@ -337,6 +333,49 @@ public class RepositoryDAO {
         } catch(SQLException e) {
             throw new RuntimeException("Error removing RepoStar", e);
         }
+    }
+
+    public List<Repository> getStarredRepos(long userId) {
+        List<Repository> repos = new ArrayList<>();
+
+        String sql = """
+                SELECT r.*
+                FROM repo_stars rs
+                JOIN repositories r ON rs.repository_id = r.repository_id
+                WHERE rs.user_id = ?;
+                """;
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    repos.add(mapResultSetToRepository(rs));
+                }
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error Fetching Starred Repos", e);
+        }
+
+        return repos;
+    }
+
+    public int getStarCountByRepository(long repositoryId) {
+        String sql = "SELECT COUNT(*) FROM repo_stars WHERE repository_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, repositoryId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching star count", e);
+        }
+
+        return 0;
     }
 
     public List<RepoStar> getStarsByRepository(long repositoryId) {
