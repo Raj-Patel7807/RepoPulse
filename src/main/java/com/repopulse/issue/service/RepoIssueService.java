@@ -15,22 +15,22 @@ public class RepoIssueService {
         this.repoIssueDAO = new RepoIssueDAO();
     }
 
-    public void createIssue(long repositoryId, long createdByUserId, Long assignedToUserId, String title, String description, String status, String priority, Timestamp createdAt, Timestamp closedAt, Long milestoneId) {
+    public void createIssue(long repositoryId, long createdByUserId, String title, String description, String priority) {
 
         RepoIssue issue = new RepoIssue();
 
         issue.setRepositoryId(repositoryId);
         issue.setCreatedByUserId(createdByUserId);
-        issue.setAssignedToUserId(assignedToUserId);
         issue.setTitle(title);
         issue.setDescription(description);
-        issue.setStatus(validateStatus(status));
+        issue.setStatus(validateStatus("OPEN"));
         issue.setPriority(validatePriority(priority));
-        issue.setCreatedAt(createdAt);
-        issue.setClosedAt(closedAt);
-        issue.setMilestoneId(milestoneId);
 
         repoIssueDAO.createRepoIssue(issue);
+    }
+
+    public void closeIssue(long issueId, long repoId, long userId) {
+        repoIssueDAO.closeIssue(issueId, repoId, userId);
     }
 
     public RepoIssue getIssue(long issueId) {

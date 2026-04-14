@@ -111,6 +111,30 @@ public class RepoIssueDAO {
         return issues;
     }
 
+    public void closeIssue(long issueId, long repoId, long userId) {
+        String sql = """
+                UPDATE repo_issues
+                SET status = 'CLOSED', closed_at = CURRENT_TIMESTAMP1
+                WHERE issue_id = ? AND repository_id = ? AND assigned_to_user_id = ?
+                """;
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, issueId);
+            stmt.setLong(2, repoId);
+            stmt.setLong(3, userId);
+
+            int rows = stmt.executeUpdate();
+
+            if(rows > 0) {
+                System.out.println("Issue closed successfully.");
+            } else {
+                System.out.println("No issue found or not authorized.");
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error while closing the Issue", e);
+        }
+    }
+
     public void createLabel(IssueLabel label) {
         String sql = "INSERT INTO issue_labels (repository_id, label_name, label_color, created_at) VALUES (?, ?, ?, ?)";
 
