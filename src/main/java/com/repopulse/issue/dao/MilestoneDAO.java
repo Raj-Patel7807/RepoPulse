@@ -71,4 +71,17 @@ public class MilestoneDAO {
         }
         return milestones;
     }
+
+    public boolean updateMilestoneStatus(long milestoneId, String status) {
+        String sql = "UPDATE milestones SET status = ?, closed_at = CASE WHEN ? = 'CLOSED' THEN CURRENT_TIMESTAMP ELSE NULL END WHERE milestone_id = ?";
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            stmt.setString(2, status);
+            stmt.setLong(3, milestoneId);
+            return stmt.executeUpdate() > 0;
+        } catch(SQLException e) {
+            throw new RuntimeException("Error updating milestone status", e);
+        }
+    }
 }

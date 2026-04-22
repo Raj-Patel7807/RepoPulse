@@ -100,6 +100,37 @@ public class DiscussionCommentDAO {
         return comments;
     }
 
+    public List<DiscussionComment> getCommentsByTarget(Long commitId, Long pullRequestId, Long issueId) {
+        List<DiscussionComment> comments = new ArrayList<>();
+        String sql = """
+                SELECT * FROM discussion_comments
+                WHERE commit_id IS NOT DISTINCT FROM ?
+                  AND pull_request_id IS NOT DISTINCT FROM ?
+                  AND issue_id IS NOT DISTINCT FROM ?
+                ORDER BY created_at ASC
+                """;
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if(commitId != null) stmt.setLong(1, commitId);
+            else stmt.setNull(1, Types.BIGINT);
+
+            if(pullRequestId != null) stmt.setLong(2, pullRequestId);
+            else stmt.setNull(2, Types.BIGINT);
+
+            if(issueId != null) stmt.setLong(3, issueId);
+            else stmt.setNull(3, Types.BIGINT);
+
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    comments.add(mapResultSetToComment(rs));
+                }
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error fetching DiscussionComments by target", e);
+        }
+        return comments;
+    }
+
     private DiscussionComment mapResultSetToComment(ResultSet rs) throws SQLException {
         DiscussionComment comment = new DiscussionComment();
 

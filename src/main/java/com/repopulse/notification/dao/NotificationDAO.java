@@ -79,4 +79,29 @@ public class NotificationDAO {
             throw new RuntimeException("Error marking notification as read", e);
         }
     }
+
+    public void markAllAsRead(long userId) {
+        String sql = "UPDATE notifications SET is_read = TRUE WHERE user_id = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException("Error marking all notifications as read", e);
+        }
+    }
+
+    public int getUnreadCount(long userId) {
+        String sql = "SELECT COUNT(*) AS cnt FROM notifications WHERE user_id = ? AND is_read = FALSE";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return rs.getInt("cnt");
+                }
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error fetching unread notification count", e);
+        }
+        return 0;
+    }
 }

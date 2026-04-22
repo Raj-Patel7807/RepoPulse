@@ -1,5 +1,6 @@
 package com.repopulse.commit.dao;
 
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.commit.model.Commit;
 import com.repopulse.infra.database.DBConnection;
 
@@ -64,7 +65,7 @@ public class CommitDAO {
                 return mapResultSetToCommit(rs);
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load commit.", e);
         }
         return null;
     }
@@ -82,7 +83,7 @@ public class CommitDAO {
                 commits.add(mapResultSetToCommit(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list commits for repository.", e);
         }
         return commits;
     }
@@ -100,7 +101,7 @@ public class CommitDAO {
                 commits.add(mapResultSetToCommit(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list commits for author.", e);
         }
 
         return commits;
@@ -117,7 +118,7 @@ public class CommitDAO {
                 return mapResultSetToCommit(rs);
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load latest commit.", e);
         }
         return null;
     }
@@ -129,7 +130,7 @@ public class CommitDAO {
             ps.setLong(1, commitId);
             ps.executeUpdate();
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to delete commit.", e);
         }
     }
 

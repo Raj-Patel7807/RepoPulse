@@ -192,6 +192,60 @@ public class RepositoryService {
         return repositoryDAO.getWatchers(repositoryId);
     }
 
+    public boolean canReadRepository(long repositoryId, Long userId) {
+        Repository repo = repositoryDAO.getRepositoryById(repositoryId);
+        if(repo == null) return false;
+
+        String visibility = repo.getRepoVisibilityType();
+        if("PUBLIC".equalsIgnoreCase(visibility)) {
+            return true;
+        }
+        if("INTERNAL".equalsIgnoreCase(visibility)) {
+            return userId != null;
+        }
+
+        if(userId == null) {
+            return false;
+        }
+
+        if(repo.getRepoOwnerUserId() == userId) {
+            return true;
+        }
+        return repositoryDAO.getCollaboratorRole(repositoryId, userId) != null;
+    }
+
+    public boolean canWriteRepository(long repositoryId, Long userId) {
+        if(userId == null) {
+            return false;
+        }
+
+        Repository repo = repositoryDAO.getRepositoryById(repositoryId);
+        if(repo == null) return false;
+
+        if(repo.getRepoOwnerUserId() == userId) {
+            return true;
+        }
+
+        String role = repositoryDAO.getCollaboratorRole(repositoryId, userId);
+        return "OWNER".equalsIgnoreCase(role) || "MAINTAINER".equalsIgnoreCase(role) || "WRITE".equalsIgnoreCase(role);
+    }
+
+    public boolean canManageCollaborators(long repositoryId, Long userId) {
+        if(userId == null) {
+            return false;
+        }
+
+        Repository repo = repositoryDAO.getRepositoryById(repositoryId);
+        if(repo == null) return false;
+
+        if(repo.getRepoOwnerUserId() == userId) {
+            return true;
+        }
+
+        String role = repositoryDAO.getCollaboratorRole(repositoryId, userId);
+        return "OWNER".equalsIgnoreCase(role) || "MAINTAINER".equalsIgnoreCase(role);
+    }
+
     private RepoWatcher.WatchLevel validateWatchLevel(String level) {
         switch(level.toUpperCase()) {
             case "ALL", "PARTICIPATING", "NONE" -> {}

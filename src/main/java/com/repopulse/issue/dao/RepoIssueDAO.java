@@ -114,7 +114,7 @@ public class RepoIssueDAO {
     public void closeIssue(long issueId, long repoId, long userId) {
         String sql = """
                 UPDATE repo_issues
-                SET status = 'CLOSED', closed_at = CURRENT_TIMESTAMP1
+                SET status = 'CLOSED', closed_at = CURRENT_TIMESTAMP
                 WHERE issue_id = ? AND repository_id = ? AND assigned_to_user_id = ?
                 """;
 
@@ -207,6 +207,17 @@ public class RepoIssueDAO {
             throw new RuntimeException("Error fetching labels for issue", e);
         }
         return labelIds;
+    }
+
+    public boolean assignMilestone(long issueId, long milestoneId) {
+        String sql = "UPDATE repo_issues SET milestone_id = ? WHERE issue_id = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, milestoneId);
+            stmt.setLong(2, issueId);
+            return stmt.executeUpdate() > 0;
+        } catch(SQLException e) {
+            throw new RuntimeException("Error assigning milestone", e);
+        }
     }
 
     private RepoIssue mapResultSetToRepoIssue(ResultSet rs) throws SQLException {

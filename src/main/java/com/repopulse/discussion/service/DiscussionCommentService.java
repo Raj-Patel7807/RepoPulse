@@ -2,6 +2,7 @@ package com.repopulse.discussion.service;
 
 import com.repopulse.discussion.dao.DiscussionCommentDAO;
 import com.repopulse.discussion.model.DiscussionComment;
+import com.repopulse.discussion.validator.DiscussionCommentValidator;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,6 +24,7 @@ public class DiscussionCommentService {
         if(nonNullCount != 1) {
             throw new IllegalArgumentException("Exactly one of commitId, pullRequestId, or issueId must be non-null");
         }
+        DiscussionCommentValidator.validateBody(commentBody);
 
         DiscussionComment comment = new DiscussionComment();
 
@@ -45,5 +47,17 @@ public class DiscussionCommentService {
 
     public List<DiscussionComment> getChildComments(long parentCommentId) {
         return commentDAO.getCommentsByParent(parentCommentId);
+    }
+
+    public List<DiscussionComment> getCommentsByTarget(Long commitId, Long pullRequestId, Long issueId) {
+        int nonNullCount = 0;
+        if(commitId != null) nonNullCount++;
+        if(pullRequestId != null) nonNullCount++;
+        if(issueId != null) nonNullCount++;
+        if(nonNullCount != 1) {
+            throw new IllegalArgumentException("Exactly one of commitId, pullRequestId, or issueId must be non-null");
+        }
+
+        return commentDAO.getCommentsByTarget(commitId, pullRequestId, issueId);
     }
 }

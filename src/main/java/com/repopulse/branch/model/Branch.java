@@ -13,18 +13,6 @@ public class Branch {
 
     }
 
-    public Branch(long branchId, String branchName, long repoId, long headCommitId) {
-        this.branchId = branchId;
-        this.branchName = branchName;
-        this.repoId = repoId;
-        this.headCommitId = headCommitId;
-    }
-
-    public Branch(String branchName, long repoId) {
-        this.branchName = branchName;
-        this.repoId = repoId;
-    }
-
     public long getBranchId() {
         return this.branchId;
     }

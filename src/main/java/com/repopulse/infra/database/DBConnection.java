@@ -1,5 +1,6 @@
 package com.repopulse.infra.database;
 
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.infra.config.AppConfig;
 
 import java.sql.Connection;
@@ -18,7 +19,10 @@ public class DBConnection {
                 connection = DriverManager.getConnection(url, username, password);
             }
         } catch(Exception e) {
-            throw new RuntimeException("DB Connection failed", e);
+            throw new DataAccessException(
+                    "Database connection failed. Check `db.url`, `db.username`, `db.password` in `config.properties`.",
+                    e
+            );
         }
         return connection;
     }

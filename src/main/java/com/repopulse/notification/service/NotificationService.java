@@ -32,6 +32,14 @@ public class NotificationService {
         this.notificationDAO.markAsRead(notificationId);
     }
 
+    public void markAllNotificationsAsRead(long userId) {
+        this.notificationDAO.markAllAsRead(userId);
+    }
+
+    public int getUnreadNotificationCount(long userId) {
+        return this.notificationDAO.getUnreadCount(userId);
+    }
+
     private Notification.NotificationType validateType(String type) {
         switch(type.toUpperCase()) {
             case "FOLLOW", "PR", "ISSUE", "STAR", "COMMENT" -> {}

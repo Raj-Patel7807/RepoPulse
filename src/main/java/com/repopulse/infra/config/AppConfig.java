@@ -1,5 +1,7 @@
 package com.repopulse.infra.config;
 
+import com.repopulse.infra.exception.AppException;
+
 import java.util.Properties;
 import java.io.InputStream;
 
@@ -11,9 +13,15 @@ public class AppConfig {
             InputStream input = AppConfig.class
                     .getClassLoader()
                     .getResourceAsStream("config.properties");
+            if(input == null) {
+                throw new AppException(
+                        "Missing `config.properties`. Create `src/main/resources/config.properties` (you can copy `config.properties.example`)."
+                );
+            }
             props.load(input);
         } catch(Exception e) {
-            throw new RuntimeException("Failed to load config...!!!");
+            if(e instanceof AppException) throw (AppException) e;
+            throw new AppException("Failed to load configuration. Please check `config.properties`.", e);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.repopulse.repository.dao;
 
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.infra.database.DBConnection;
 import com.repopulse.repository.model.*;
 
@@ -68,7 +69,7 @@ public class RepositoryDAO {
                 return mapResultSetToRepository(rs);
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load repository.", e);
         }
         return null;
     }
@@ -86,7 +87,7 @@ public class RepositoryDAO {
                 repos.add(mapResultSetToRepository(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list repositories for user.", e);
         }
         return repos;
     }
@@ -104,7 +105,7 @@ public class RepositoryDAO {
                 repos.add(mapResultSetToRepository(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list repositories.", e);
         }
         return repos;
     }
@@ -126,7 +127,7 @@ public class RepositoryDAO {
 
             ps.executeUpdate();
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to update repository.", e);
         }
     }
 
@@ -143,7 +144,7 @@ public class RepositoryDAO {
 
             ps.executeUpdate();
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to delete repository.", e);
         }
     }
 
@@ -189,7 +190,7 @@ public class RepositoryDAO {
                 clones.add(mapResultSetToRepoClone(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load clones for repository.", e);
         }
 
         return clones;
@@ -211,7 +212,7 @@ public class RepositoryDAO {
                 clones.add(mapResultSetToRepoClone(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load clones for user.", e);
         }
 
         return clones;
@@ -308,6 +309,22 @@ public class RepositoryDAO {
         }
 
         return collaborators;
+    }
+
+    public String getCollaboratorRole(long repoId, long userId) {
+        String sql = "SELECT access_role FROM repo_collaborators WHERE repository_id = ? AND user_id = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, repoId);
+            stmt.setLong(2, userId);
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return rs.getString("access_role");
+                }
+            }
+        } catch(SQLException e) {
+            throw new DataAccessException("Failed to check collaborator role.", e);
+        }
+        return null;
     }
 
     public void addStar(RepoStar star) {
@@ -438,7 +455,7 @@ public class RepositoryDAO {
                 return mapResultSetToRepoTag(rs);
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load tag.", e);
         }
         return null;
     }
@@ -456,7 +473,7 @@ public class RepositoryDAO {
                 tags.add(mapResultSetToRepoTag(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load tags for repository.", e);
         }
         return tags;
     }
@@ -465,7 +482,9 @@ public class RepositoryDAO {
         String sql = """
             INSERT INTO repo_watchers (user_id, repository_id, watch_level, watched_at)
             VALUES (?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE watch_level = ?, watched_at = ?
+            ON CONFLICT (user_id, repository_id)
+            DO UPDATE SET watch_level = EXCLUDED.watch_level,
+                          watched_at = EXCLUDED.watched_at
         """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -473,8 +492,6 @@ public class RepositoryDAO {
             stmt.setLong(2, watcher.getRepositoryId());
             stmt.setString(3, watcher.getWatchLevel().name());
             stmt.setTimestamp(4, watcher.getWatchedAt());
-            stmt.setString(5, watcher.getWatchLevel().name());
-            stmt.setTimestamp(6, watcher.getWatchedAt());
 
             stmt.executeUpdate();
         } catch(SQLException e) {

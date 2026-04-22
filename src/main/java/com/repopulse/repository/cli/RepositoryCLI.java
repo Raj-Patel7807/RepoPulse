@@ -1,6 +1,6 @@
 package com.repopulse.repository.cli;
 
-import com.repopulse.common.cli.CliUtils;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
 import com.repopulse.repository.model.Repository;
 import com.repopulse.repository.service.RepositoryService;

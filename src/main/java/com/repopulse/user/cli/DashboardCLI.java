@@ -1,7 +1,8 @@
 package com.repopulse.user.cli;
 
-import com.repopulse.common.cli.CliUtils;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.notification.cli.NotificationCLI;
 import com.repopulse.repository.cli.RepositoryCLI;
 import com.repopulse.user.model.User;
 import com.repopulse.user.service.UserService;
@@ -10,6 +11,7 @@ public class DashboardCLI {
     private final UserService userService = new UserService();
 
     private final RepositoryCLI repositoryCLI = new RepositoryCLI();
+    private final NotificationCLI notificationCLI = new NotificationCLI();
 
     public void start() {
         while(true) {
@@ -31,7 +33,7 @@ public class DashboardCLI {
             } else if(choice == 3) {
                 searchUser();
             } else if(choice == 4) {
-                System.out.println("Notification Pending........");
+                notificationCLI.start();
             } else if(choice == 5) {
                 Session.setCurrentUser(null);
                 return;

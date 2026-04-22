@@ -48,6 +48,10 @@ public class BranchService {
         return branchDAO.addBranchMerge(merge);
     }
 
+    public boolean deleteBranch(long repoId, long branchId) {
+        return branchDAO.deleteBranchById(repoId, branchId);
+    }
+
     public BranchMerge getMergeById(long mergeId) {
         return branchDAO.getBranchMergeById(mergeId);
     }

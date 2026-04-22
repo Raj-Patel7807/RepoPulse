@@ -2,6 +2,7 @@ package com.repopulse.branch.dao;
 
 import com.repopulse.branch.model.Branch;
 import com.repopulse.branch.model.BranchMerge;
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.infra.database.DBConnection;
 
 import java.sql.Connection;
@@ -96,6 +97,18 @@ public class BranchDAO {
         }
     }
 
+    public boolean deleteBranchById(long repoId, long branchId) {
+        String sql = "DELETE FROM branches WHERE repository_id = ? AND branch_id = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, repoId);
+            ps.setLong(2, branchId);
+            return ps.executeUpdate() > 0;
+        } catch(SQLException e) {
+            throw new DataAccessException("Failed to delete branch.", e);
+        }
+    }
+
     public boolean addBranchMerge(BranchMerge merge) {
         String sql = "INSERT INTO branch_merges (repository_id, source_branch_id, target_branch_id, merge_commit_id, merged_by_user_id, merge_strategy, merged_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -110,8 +123,7 @@ public class BranchDAO {
 
             return stmt.executeUpdate() > 0;
         } catch(SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DataAccessException("Failed to create branch merge.", e);
         }
     }
 
@@ -126,7 +138,7 @@ public class BranchDAO {
                 return mapResultSetToBranchMerge(rs);
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load branch merge.", e);
         }
         return null;
     }
@@ -142,7 +154,7 @@ public class BranchDAO {
                 merges.add(mapResultSetToBranchMerge(rs));
             }
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list branch merges.", e);
         }
         return merges;
     }
@@ -165,8 +177,7 @@ public class BranchDAO {
 
             return stmt.executeUpdate() > 0;
         } catch(SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DataAccessException("Failed to update branch merge.", e);
         }
     }
 
@@ -178,8 +189,7 @@ public class BranchDAO {
 
             return stmt.executeUpdate() > 0;
         } catch(SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new DataAccessException("Failed to delete branch merge.", e);
         }
     }
 

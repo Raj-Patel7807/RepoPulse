@@ -1,4 +1,4 @@
-package com.repopulse.common.cli;
+package com.repopulse.infra.util;
 
 import java.util.Scanner;
 

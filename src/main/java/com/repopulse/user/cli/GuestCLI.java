@@ -1,8 +1,10 @@
 package com.repopulse.user.cli;
 
-import com.repopulse.common.cli.CliUtils;
+import com.repopulse.infra.util.CliUtils;
+import com.repopulse.repository.cli.ExploreRepositoryCLI;
 
 public class GuestCLI {
+    private final ExploreRepositoryCLI exploreRepositoryCLI = new ExploreRepositoryCLI();
 
     public void start() {
 
@@ -15,7 +17,7 @@ public class GuestCLI {
             int choice = CliUtils.getIntInput("Enter Choice: ");
 
             if(choice == 1) {
-                System.out.println("Explore Repo Pending.......");
+                exploreRepositoryCLI.start();
             } else if(choice == 2) {
                 String username = CliUtils.getStringInput("Enter Username: ");
 

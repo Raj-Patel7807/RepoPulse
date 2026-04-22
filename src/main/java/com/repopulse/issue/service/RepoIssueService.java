@@ -62,6 +62,10 @@ public class RepoIssueService {
         return repoIssueDAO.getLabelsByRepo(repositoryId);
     }
 
+    public boolean assignMilestoneToIssue(long issueId, long milestoneId) {
+        return repoIssueDAO.assignMilestone(issueId, milestoneId);
+    }
+
     private RepoIssue.Status validateStatus(String status) {
         switch(status.toUpperCase()) {
             case "OPEN", "CLOSED" -> {}

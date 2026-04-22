@@ -1,5 +1,6 @@
 package com.repopulse.file.service;
 
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.file.dao.RepoFileDAO;
 import com.repopulse.file.model.FileDiff;
 import com.repopulse.file.model.FileVersion;
@@ -20,7 +21,7 @@ public class RepoFileService {
             fileDAO.createFile(file);
             System.out.println("File added successfully with ID: " + file.getFileId());
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to add file.", e);
         }
     }
 
@@ -28,18 +29,16 @@ public class RepoFileService {
         try {
             return fileDAO.getFileById(fileId);
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to load file.", e);
         }
-        return null;
     }
 
     public List<RepoFile> getFilesByRepo(long repoId) {
         try {
             return fileDAO.getFilesByRepo(repoId);
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to list files for repository.", e);
         }
-        return List.of();
     }
 
     public void updateFile(RepoFile file) {
@@ -47,7 +46,7 @@ public class RepoFileService {
             fileDAO.updateFile(file);
             System.out.println("File updated successfully!");
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to update file.", e);
         }
     }
 
@@ -56,7 +55,7 @@ public class RepoFileService {
             fileDAO.deleteFile(fileId);
             System.out.println("File deleted successfully!");
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to delete file.", e);
         }
     }
 
