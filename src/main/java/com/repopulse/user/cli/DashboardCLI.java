@@ -47,13 +47,13 @@ public class DashboardCLI {
     private void searchUser() {
         String username = CliUtils.getStringInput("Enter Username to Search: ");
 
-        User user = userService.getUserByUsername(username);
+        User user = userService.getVisibleUserByUsername(Session.getCurrentUser().getUserId(), username);
 
         if(user != null) {
             ProfileCLI profileCLI = new ProfileCLI(username, true);
             profileCLI.start();
         } else {
-            System.out.println("User not found!!");
+            System.out.println("User not found or inaccessible.");
             CliUtils.waitForEnter();
         }
     }

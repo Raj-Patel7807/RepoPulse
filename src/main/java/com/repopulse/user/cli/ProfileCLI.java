@@ -1,6 +1,7 @@
 package com.repopulse.user.cli;
 
 import com.repopulse.infra.session.Authz;
+import com.repopulse.infra.exception.AppException;
 import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
 import com.repopulse.repository.model.Repository;
@@ -25,6 +26,12 @@ public class ProfileCLI {
             System.out.println("User not found.");
             CliUtils.waitForEnter();
             return;
+        }
+        if(Session.getCurrentUser() != null
+                && Session.getCurrentUser().getUserId() != user.getUserId()
+                && !Session.isAdminSession()
+                && userService.hasBlockRelationship(Session.getCurrentUser().getUserId(), user.getUserId())) {
+            throw new AppException("This profile is not accessible due to block settings.");
         }
 
         while(true) {

@@ -252,6 +252,47 @@ public class UserDAO {
         return reports;
     }
 
+    public List<UserReport> getAllReports() {
+        List<UserReport> reports = new ArrayList<>();
+        String sql = "SELECT * FROM user_reports ORDER BY created_at DESC";
+        try(PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+            while(rs.next()) {
+                UserReport report = new UserReport();
+                report.setReportId(rs.getLong("report_id"));
+                report.setReportedUserId(rs.getLong("reported_user_id"));
+                report.setReporterUserId(rs.getLong("reporter_user_id"));
+                report.setReportReason(UserReport.ReportReason.valueOf(rs.getString("report_reason")));
+                report.setReportDescription(rs.getString("report_description"));
+                report.setReportStatus(UserReport.ReportStatus.valueOf(rs.getString("report_status")));
+                long adminId = rs.getLong("reviewed_by_admin_id");
+                report.setReviewedByAdminId(rs.wasNull() ? null : adminId);
+                report.setCreatedAt(rs.getTimestamp("created_at"));
+                report.setReviewedAt(rs.getTimestamp("reviewed_at"));
+                reports.add(report);
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error fetching all reports", e);
+        }
+        return reports;
+    }
+
+    public boolean reviewReport(long reportId, long adminUserId, UserReport.ReportStatus newStatus) {
+        String sql = """
+            UPDATE user_reports
+            SET report_status = ?, reviewed_by_admin_id = ?, reviewed_at = CURRENT_TIMESTAMP
+            WHERE report_id = ?
+        """;
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newStatus.name());
+            stmt.setLong(2, adminUserId);
+            stmt.setLong(3, reportId);
+            return stmt.executeUpdate() > 0;
+        } catch(SQLException e) {
+            throw new RuntimeException("Error reviewing report", e);
+        }
+    }
+
     public void pinRepo(UserPinnedRepo pinned) {
         String sql = "INSERT INTO user_pinned_repos (user_id, repository_id, pinned_at) VALUES (?, ?, ?)";
 
@@ -343,6 +384,17 @@ public class UserDAO {
         }
     }
 
+    public void unblockUser(long blockerUserId, long blockedUserId) {
+        String sql = "DELETE FROM user_blocks WHERE blocker_user_id = ? AND blocked_user_id = ?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, blockerUserId);
+            stmt.setLong(2, blockedUserId);
+            stmt.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException("Error unblocking user", e);
+        }
+    }
+
     public List<Long> getBlockedUsers(long blockerId) {
         List<Long> blocked = new ArrayList<>();
 
@@ -357,6 +409,27 @@ public class UserDAO {
             throw new RuntimeException("Error fetching blocked users", e);
         }
         return blocked;
+    }
+
+    public boolean hasBlockRelationship(long userA, long userB) {
+        String sql = """
+            SELECT 1
+            FROM user_blocks
+            WHERE (blocker_user_id = ? AND blocked_user_id = ?)
+               OR (blocker_user_id = ? AND blocked_user_id = ?)
+            LIMIT 1
+        """;
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userA);
+            stmt.setLong(2, userB);
+            stmt.setLong(3, userB);
+            stmt.setLong(4, userA);
+            try(ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch(SQLException e) {
+            throw new RuntimeException("Error checking block relationship", e);
+        }
     }
 
     public void createActivityLog(UserActivityLog log) {

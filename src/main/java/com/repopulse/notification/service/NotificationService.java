@@ -2,6 +2,7 @@ package com.repopulse.notification.service;
 
 import com.repopulse.notification.dao.NotificationDAO;
 import com.repopulse.notification.model.Notification;
+import com.repopulse.notification.validator.NotificationValidator;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -16,7 +17,7 @@ public class NotificationService {
     public void sendNotification(long userId, String typeStr, long referenceId) {
         Notification notification = new Notification();
         notification.setUserId(userId);
-        notification.setNotificationType(validateType(typeStr));
+        notification.setNotificationType(NotificationValidator.validateType(typeStr));
         notification.setReferenceId(referenceId);
         notification.setIsRead(false);
         notification.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -40,11 +41,4 @@ public class NotificationService {
         return this.notificationDAO.getUnreadCount(userId);
     }
 
-    private Notification.NotificationType validateType(String type) {
-        switch(type.toUpperCase()) {
-            case "FOLLOW", "PR", "ISSUE", "STAR", "COMMENT" -> {}
-            default -> throw new IllegalArgumentException("Invalid notification type: " + type);
-        }
-        return Notification.NotificationType.valueOf(type.toUpperCase());
-    }
 }

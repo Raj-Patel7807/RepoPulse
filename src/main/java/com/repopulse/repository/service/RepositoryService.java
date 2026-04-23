@@ -3,6 +3,8 @@ package com.repopulse.repository.service;
 import com.repopulse.infra.session.Session;
 import com.repopulse.repository.model.*;
 import com.repopulse.repository.dao.RepositoryDAO;
+import com.repopulse.repository.validator.RepositoryValidator;
+import com.repopulse.user.dao.UserDAO;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -10,14 +12,16 @@ import java.util.List;
 public class RepositoryService {
 
     private final RepositoryDAO repositoryDAO;
+    private final UserDAO userDAO;
 
     public RepositoryService() {
         this.repositoryDAO = new RepositoryDAO();
+        this.userDAO = new UserDAO();
     }
 
     public Repository createRepository(String name, String description, long ownerUserId, String visibilityType, Long parentRepoId, Long forkedFromCommitId) {
-        validateRepoName(name);
-        validateVisibilityType(visibilityType);
+        RepositoryValidator.validateRepoName(name);
+        RepositoryValidator.validateVisibilityType(visibilityType);
 
         Repository repo = new Repository();
 
@@ -54,11 +58,23 @@ public class RepositoryService {
     }
 
     public List<Repository> getRepositoriesByUser(long userId) {
-        return repositoryDAO.getRepositoriesByUser(userId);
+        List<Repository> repos = repositoryDAO.getRepositoriesByUser(userId);
+        Long currentUserId = Session.getCurrentUser() == null ? null : Session.getCurrentUser().getUserId();
+        if(currentUserId == null || currentUserId == userId || Session.isAdminSession()) {
+            return repos;
+        }
+        repos.removeIf(repo -> userDAO.hasBlockRelationship(currentUserId, repo.getRepoOwnerUserId()));
+        return repos;
     }
 
     public List<Repository> getAllPublicRepositories() {
-        return repositoryDAO.getAllRepositories("PUBLIC");
+        List<Repository> repos = repositoryDAO.getAllRepositories("PUBLIC");
+        Long currentUserId = Session.getCurrentUser() == null ? null : Session.getCurrentUser().getUserId();
+        if(currentUserId == null || Session.isAdminSession()) {
+            return repos;
+        }
+        repos.removeIf(repo -> userDAO.hasBlockRelationship(currentUserId, repo.getRepoOwnerUserId()));
+        return repos;
     }
 
     public List<Repository> getAllPrivateRepositories() {
@@ -66,8 +82,8 @@ public class RepositoryService {
     }
 
     public void updateRepository(long repoId, String name, String description, String visibilityType, Long defaultBranchId) {
-        validateRepoName(name);
-        validateVisibilityType(visibilityType);
+        RepositoryValidator.validateRepoName(name);
+        RepositoryValidator.validateVisibilityType(visibilityType);
 
         Repository repo = repositoryDAO.getRepositoryById(repoId);
         if(repo == null) {
@@ -108,7 +124,7 @@ public class RepositoryService {
     }
 
     public void addCollaborator(long repoId, long userId, String accessRole) {
-        validateRole(accessRole);
+        RepositoryValidator.validateRole(accessRole);
 
         RepoCollaborator collaborator = new RepoCollaborator();
         collaborator.setRepositoryId(repoId);
@@ -123,7 +139,7 @@ public class RepositoryService {
     }
 
     public void updateAccessRole(long repoId, long userId, String accessRole) {
-        validateRole(accessRole);
+        RepositoryValidator.validateRole(accessRole);
         repositoryDAO.updateAccessRole(repoId, userId, accessRole);
     }
 
@@ -182,7 +198,7 @@ public class RepositoryService {
         RepoWatcher watcher = new RepoWatcher();
         watcher.setUserId(userId);
         watcher.setRepositoryId(repositoryId);
-        watcher.setWatchLevel(validateWatchLevel(watchLevelStr));
+        watcher.setWatchLevel(RepositoryValidator.validateWatchLevel(watchLevelStr));
         watcher.setWatchedAt(new Timestamp(System.currentTimeMillis()));
 
         repositoryDAO.addOrUpdateWatcher(watcher);
@@ -195,6 +211,9 @@ public class RepositoryService {
     public boolean canReadRepository(long repositoryId, Long userId) {
         Repository repo = repositoryDAO.getRepositoryById(repositoryId);
         if(repo == null) return false;
+        if(userId != null && !Session.isAdminSession() && userDAO.hasBlockRelationship(userId, repo.getRepoOwnerUserId())) {
+            return false;
+        }
 
         String visibility = repo.getRepoVisibilityType();
         if("PUBLIC".equalsIgnoreCase(visibility)) {
@@ -221,6 +240,9 @@ public class RepositoryService {
 
         Repository repo = repositoryDAO.getRepositoryById(repositoryId);
         if(repo == null) return false;
+        if(!Session.isAdminSession() && userDAO.hasBlockRelationship(userId, repo.getRepoOwnerUserId())) {
+            return false;
+        }
 
         if(repo.getRepoOwnerUserId() == userId) {
             return true;
@@ -237,6 +259,9 @@ public class RepositoryService {
 
         Repository repo = repositoryDAO.getRepositoryById(repositoryId);
         if(repo == null) return false;
+        if(!Session.isAdminSession() && userDAO.hasBlockRelationship(userId, repo.getRepoOwnerUserId())) {
+            return false;
+        }
 
         if(repo.getRepoOwnerUserId() == userId) {
             return true;
@@ -246,30 +271,4 @@ public class RepositoryService {
         return "OWNER".equalsIgnoreCase(role) || "MAINTAINER".equalsIgnoreCase(role);
     }
 
-    private RepoWatcher.WatchLevel validateWatchLevel(String level) {
-        switch(level.toUpperCase()) {
-            case "ALL", "PARTICIPATING", "NONE" -> {}
-            default -> throw new IllegalArgumentException("Invalid watch level: " + level);
-        }
-        return RepoWatcher.WatchLevel.valueOf(level.toUpperCase());
-    }
-
-    private void validateRole(String role) {
-        switch(role.toUpperCase()) {
-            case "OWNER", "MAINTAINER", "WRITE", "READ" -> {}
-            default -> throw new IllegalArgumentException("Invalid access role: " + role);
-        }
-    }
-
-    private void validateRepoName(String name) {
-        if(name == null || name.trim().length() < 1 || name.length() > 100) {
-            throw new IllegalArgumentException("Repository name must be 1-100 characters");
-        }
-    }
-
-    private void validateVisibilityType(String visibilityType) {
-        if(!"PUBLIC".equalsIgnoreCase(visibilityType) && !"PRIVATE".equalsIgnoreCase(visibilityType)) {
-            throw new IllegalArgumentException("Visibility type must be PUBLIC or PRIVATE");
-        }
-    }
 }

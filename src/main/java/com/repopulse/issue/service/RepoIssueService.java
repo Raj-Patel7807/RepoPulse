@@ -3,6 +3,7 @@ package com.repopulse.issue.service;
 import com.repopulse.issue.dao.RepoIssueDAO;
 import com.repopulse.issue.model.IssueLabel;
 import com.repopulse.issue.model.RepoIssue;
+import com.repopulse.issue.validator.RepoIssueValidator;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -23,8 +24,8 @@ public class RepoIssueService {
         issue.setCreatedByUserId(createdByUserId);
         issue.setTitle(title);
         issue.setDescription(description);
-        issue.setStatus(validateStatus("OPEN"));
-        issue.setPriority(validatePriority(priority));
+        issue.setStatus(RepoIssueValidator.validateStatus("OPEN"));
+        issue.setPriority(RepoIssueValidator.validatePriority(priority));
 
         repoIssueDAO.createRepoIssue(issue);
     }
@@ -66,19 +67,4 @@ public class RepoIssueService {
         return repoIssueDAO.assignMilestone(issueId, milestoneId);
     }
 
-    private RepoIssue.Status validateStatus(String status) {
-        switch(status.toUpperCase()) {
-            case "OPEN", "CLOSED" -> {}
-            default -> throw new IllegalArgumentException("Invalid status: " + status);
-        }
-        return RepoIssue.Status.valueOf(status.toUpperCase());
-    }
-
-    private RepoIssue.Priority validatePriority(String priority) {
-        switch(priority.toUpperCase()) {
-            case "LOW", "MEDIUM", "HIGH" -> {}
-            default -> throw new IllegalArgumentException("Invalid priority: " + priority);
-        }
-        return RepoIssue.Priority.valueOf(priority.toUpperCase());
-    }
 }

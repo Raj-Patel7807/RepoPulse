@@ -23,6 +23,17 @@ public class UserService {
         return userDAO.getUserByUsername(username);
     }
 
+    public User getVisibleUserByUsername(long requesterUserId, String username) {
+        User user = userDAO.getUserByUsername(username);
+        if(user == null) {
+            return null;
+        }
+        if(user.getUserId() != requesterUserId && userDAO.hasBlockRelationship(requesterUserId, user.getUserId())) {
+            return null;
+        }
+        return user;
+    }
+
     public void updateUserProfile(long userId, String username, String email, String bio, String avatarUrl) {
         UserValidator.validateUsername(username);
         UserValidator.validateEmail(email);
@@ -74,7 +85,7 @@ public class UserService {
         UserReport report = new UserReport();
         report.setReportedUserId(reportedUserId);
         report.setReporterUserId(reporterUserId);
-        report.setReportReason(validateReason(reasonStr));
+        report.setReportReason(UserValidator.validateReportReason(reasonStr));
         report.setReportDescription(description);
         report.setReportStatus(UserReport.ReportStatus.OPEN);
         report.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -83,23 +94,15 @@ public class UserService {
     }
 
     public List<UserReport> getReportsByStatus(String statusStr) {
-        return userDAO.getReportsByStatus(validateStatus(statusStr));
+        return userDAO.getReportsByStatus(UserValidator.validateReportStatus(statusStr));
     }
 
-    private UserReport.ReportReason validateReason(String reason) {
-        switch(reason.toUpperCase()) {
-            case "SPAM", "ABUSE", "FAKE_ACCOUNT" -> {}
-            default -> throw new IllegalArgumentException("Invalid report reason: " + reason);
-        }
-        return UserReport.ReportReason.valueOf(reason.toUpperCase());
+    public List<UserReport> getAllReports() {
+        return userDAO.getAllReports();
     }
 
-    private UserReport.ReportStatus validateStatus(String status) {
-        switch(status.toUpperCase()) {
-            case "OPEN", "UNDER_REVIEW", "RESOLVED", "REJECTED" -> {}
-            default -> throw new IllegalArgumentException("Invalid report status: " + status);
-        }
-        return UserReport.ReportStatus.valueOf(status.toUpperCase());
+    public boolean reviewReport(long reportId, long adminUserId, String statusStr) {
+        return userDAO.reviewReport(reportId, adminUserId, UserValidator.validateReportStatus(statusStr));
     }
 
     public void pinRepo(long userId, long repositoryId) {
@@ -138,14 +141,22 @@ public class UserService {
         userDAO.blockUser(block);
     }
 
+    public void unblockUser(long blockerUserId, long blockedUserId) {
+        userDAO.unblockUser(blockerUserId, blockedUserId);
+    }
+
     public List<Long> getBlockedUsers(long blockerUserId) {
         return userDAO.getBlockedUsers(blockerUserId);
+    }
+
+    public boolean hasBlockRelationship(long userA, long userB) {
+        return userDAO.hasBlockRelationship(userA, userB);
     }
 
     public void logActivity(long userId, String typeStr, long referenceId, String metadataJson) {
         UserActivityLog log = new UserActivityLog();
         log.setUserId(userId);
-        log.setActivityType(validateType(typeStr));
+        log.setActivityType(UserValidator.validateActivityType(typeStr));
         log.setReferenceId(referenceId);
         log.setActivityMetadata(metadataJson);
         log.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -155,13 +166,5 @@ public class UserService {
 
     public List<UserActivityLog> getUserActivityLogs(long userId) {
         return userDAO.getActivityLogsByUser(userId);
-    }
-
-    private UserActivityLog.ActivityType validateType(String type) {
-        switch(type.toUpperCase()) {
-            case "CREATE_REPOSITORY", "COMMIT", "MERGE", "FOLLOW" -> {}
-            default -> throw new IllegalArgumentException("Invalid activity type: " + type);
-        }
-        return UserActivityLog.ActivityType.valueOf(type.toUpperCase());
     }
 }

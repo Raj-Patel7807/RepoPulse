@@ -29,16 +29,17 @@ public class IssueCLI {
             boolean loggedIn = Authz.isLoggedIn();
             System.out.println("\n=== Issues ===");
             System.out.println("1. List Issues");
+            System.out.println("2. View Issue Details");
             if(loggedIn) {
-                System.out.println("2. Create Issue");
-                System.out.println("3. Close Issue");
-                System.out.println("4. Labels");
-                System.out.println("5. Milestones");
-                System.out.println("6. Back");
+                System.out.println("3. Create Issue");
+                System.out.println("4. Close Issue");
+                System.out.println("5. Labels");
+                System.out.println("6. Milestones");
+                System.out.println("7. Back");
             } else {
-                System.out.println("2. Labels");
-                System.out.println("3. Milestones");
-                System.out.println("4. Back");
+                System.out.println("3. Labels");
+                System.out.println("4. Milestones");
+                System.out.println("5. Back");
             }
 
             int choice = CliUtils.getIntInput("Enter Choice: ");
@@ -54,7 +55,22 @@ public class IssueCLI {
                         System.out.println(issue.getIssueId() + " | " + issue.getDescription() + " | " + issue.getStatus());
                     }
                 }
-            } else if(loggedIn && choice == 2) {
+            } else if(choice == 2) {
+                long issueId = CliUtils.getLongInput("Enter Issue Id: ");
+                RepoIssue issue = issueService.getIssue(issueId);
+                if(issue == null || issue.getRepositoryId() != repoId) {
+                    System.out.println("Issue not found.");
+                } else {
+                    System.out.println("ID: " + issue.getIssueId());
+                    System.out.println("Title: " + issue.getTitle());
+                    System.out.println("Status: " + issue.getStatus());
+                    System.out.println("Priority: " + issue.getPriority());
+                    System.out.println("Description: " + issue.getDescription());
+                    List<Long> labels = issueService.getLabelsOfIssue(issueId);
+                    System.out.println("Label IDs: " + labels);
+                }
+                CliUtils.waitForEnter();
+            } else if(loggedIn && choice == 3) {
                 Authz.requireLogin("create issue");
                 ensureWriteAccess();
                 String title = CliUtils.getStringInput("Enter Issue Title: ");
@@ -63,18 +79,18 @@ public class IssueCLI {
 
                 issueService.createIssue(repoId, Session.getCurrentUser().getUserId(), title, description, priority);
 
-            } else if(loggedIn && choice == 3) {
+            } else if(loggedIn && choice == 4) {
                 Authz.requireLogin("close issue");
                 ensureWriteAccess();
                 long issueId = CliUtils.getLongInput("Enter Issue Id to Close: ");
 
                 issueService.closeIssue(issueId, repoId, Session.getCurrentUser().getUserId());
 
-            } else if((loggedIn && choice == 4) || (!loggedIn && choice == 2)) {
-                labelsMenu();
             } else if((loggedIn && choice == 5) || (!loggedIn && choice == 3)) {
-                milestonesMenu();
+                labelsMenu();
             } else if((loggedIn && choice == 6) || (!loggedIn && choice == 4)) {
+                milestonesMenu();
+            } else if((loggedIn && choice == 7) || (!loggedIn && choice == 5)) {
                 return;
             } else {
                 System.out.println("Invalid Choice..!!");

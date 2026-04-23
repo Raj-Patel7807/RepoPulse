@@ -4,6 +4,7 @@ import com.repopulse.pullrequest.dao.PullRequestDAO;
 import com.repopulse.pullrequest.model.PullRequest;
 import com.repopulse.pullrequest.model.PullRequestIssueLink;
 import com.repopulse.pullrequest.model.PullRequestReview;
+import com.repopulse.pullrequest.validator.PullRequestValidator;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class PullRequestService {
     }
 
     public void updateStatus(long prId, String status) {
-        validateStatus(status);
+        PullRequestValidator.validateStatus(status);
         pullRequestDAO.updatePullRequestStatus(prId, status);
     }
 
@@ -50,7 +51,7 @@ public class PullRequestService {
         PullRequestIssueLink link = new PullRequestIssueLink();
         link.setPullRequestId(pullRequestId);
         link.setIssueId(issueId);
-        link.setLinkType(validateLinkType(linkTypeStr));
+        link.setLinkType(PullRequestValidator.validateLinkType(linkTypeStr));
         pullRequestDAO.createLink(link);
     }
 
@@ -59,7 +60,7 @@ public class PullRequestService {
     }
 
     public void addReview(long prId, long reviewerUserId, String reviewComment, String reviewStatus) {
-        validateReviewStatus(reviewStatus);
+        PullRequestValidator.validateReviewStatus(reviewStatus);
 
         PullRequestReview review = new PullRequestReview();
         review.setPullRequestId(prId);
@@ -71,7 +72,7 @@ public class PullRequestService {
     }
 
     public void updateReview(long reviewId, String reviewComment, String reviewStatus) {
-        validateReviewStatus(reviewStatus);
+        PullRequestValidator.validateReviewStatus(reviewStatus);
         pullRequestDAO.updateReview(reviewId, reviewStatus, reviewComment);
     }
 
@@ -83,25 +84,4 @@ public class PullRequestService {
         return pullRequestDAO.getReviewsByUser(userId);
     }
 
-    private void validateReviewStatus(String status) {
-        switch(status.toUpperCase()) {
-            case "APPROVED", "CHANGES_REQUESTED", "COMMENTED" -> {}
-            default -> throw new IllegalArgumentException("Invalid review status: " + status);
-        }
-    }
-
-    private PullRequestIssueLink.LinkType validateLinkType(String linkTypeStr) {
-        switch(linkTypeStr.toUpperCase()) {
-            case "CLOSES", "REFERENCES" -> {}
-            default -> throw new IllegalArgumentException("Invalid link type: " + linkTypeStr);
-        }
-        return PullRequestIssueLink.LinkType.valueOf(linkTypeStr.toUpperCase());
-    }
-
-    private void validateStatus(String status) {
-        switch(status.toUpperCase()) {
-            case "OPEN", "CLOSED", "MERGED" -> {}
-            default -> throw new IllegalArgumentException("Invalid pull request status: " + status);
-        }
-    }
 }

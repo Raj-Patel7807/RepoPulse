@@ -1,4 +1,6 @@
-package com.repopulse.infra.exception;
+package com.repopulse.common.error;
+
+import com.repopulse.infra.exception.AppException;
 
 public class ErrorPrinter {
     private ErrorPrinter() {}
@@ -19,4 +21,3 @@ public class ErrorPrinter {
         return (s == null || s.isBlank()) ? "Something went wrong. Please try again." : s;
     }
 }
-

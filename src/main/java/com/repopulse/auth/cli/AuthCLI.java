@@ -17,7 +17,8 @@ public class AuthCLI {
             System.out.println("1. Login");
             System.out.println("2. Signup");
             System.out.println("3. Continue as Guest");
-            System.out.println("4. Exit");
+            System.out.println("4. Admin Login");
+            System.out.println("5. Exit");
 
             int choice = CliUtils.getIntInput("Enter Choice: ");
 
@@ -31,6 +32,11 @@ public class AuthCLI {
             } else if(choice == 3) {
                 guestCLI.start();
             } else if(choice == 4) {
+                boolean success = adminLogin();
+                if(success) {
+                    return;
+                }
+            } else if(choice == 5) {
                 System.out.println("Goodbye!");
                 System.exit(0);
             } else {
@@ -52,9 +58,25 @@ public class AuthCLI {
             return false;
         } else {
             Session.setCurrentUser(user);
+            Session.setAdminSession(false);
             System.out.println("Login Successful!!");
             return true;
         }
+    }
+
+    private boolean adminLogin() {
+        System.out.println("\n=== Admin Login ===");
+        String password = CliUtils.getStringInput("Admin Password: ");
+        User user = authService.loginAdmin(password);
+        if(user == null) {
+            System.out.println("Invalid admin credentials!");
+            CliUtils.waitForEnter();
+            return false;
+        }
+        Session.setCurrentUser(user);
+        Session.setAdminSession(true);
+        System.out.println("Admin login successful.");
+        return true;
     }
 
     private void signup() {

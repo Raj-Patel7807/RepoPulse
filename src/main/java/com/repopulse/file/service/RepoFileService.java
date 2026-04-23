@@ -5,6 +5,7 @@ import com.repopulse.file.dao.RepoFileDAO;
 import com.repopulse.file.model.FileDiff;
 import com.repopulse.file.model.FileVersion;
 import com.repopulse.file.model.RepoFile;
+import com.repopulse.file.validator.RepoFileValidator;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -60,7 +61,7 @@ public class RepoFileService {
     }
 
     public void createFileVersion(long fileId, long commitId, String contentHash, long fileSizeBytes, String changeType) {
-        validateChangeType(changeType);
+        RepoFileValidator.validateChangeType(changeType);
 
         FileVersion version = new FileVersion();
 
@@ -82,7 +83,7 @@ public class RepoFileService {
     }
 
     public void generateDiff(long oldVersionId, long newVersionId, String diffContent, String diffFormat) {
-        validateDiffFormat(diffFormat);
+        RepoFileValidator.validateDiffFormat(diffFormat);
 
         FileDiff diff = new FileDiff();
 
@@ -102,16 +103,4 @@ public class RepoFileService {
         return fileDAO.getDiffsByFileVersion(fileVersionId);
     }
 
-    private void validateDiffFormat(String diffFormat) {
-        if(!diffFormat.equalsIgnoreCase("UNIFIED") && !diffFormat.equalsIgnoreCase("CONTEXT")) {
-            throw new IllegalArgumentException("Invalid diff format: " + diffFormat);
-        }
-    }
-
-    private void validateChangeType(String changeType) {
-        switch(changeType.toUpperCase()) {
-            case "ADDED", "MODIFIED", "DELETED", "RENAMED" -> {}
-            default -> throw new IllegalArgumentException("Invalid change type: " + changeType);
-        }
-    }
 }
