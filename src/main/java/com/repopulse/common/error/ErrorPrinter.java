@@ -3,7 +3,8 @@ package com.repopulse.common.error;
 import com.repopulse.infra.exception.AppException;
 
 public class ErrorPrinter {
-    private ErrorPrinter() {}
+    private ErrorPrinter() {
+    }
 
     public static void print(AppException e) {
         System.out.println();

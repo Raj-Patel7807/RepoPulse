@@ -1,7 +1,7 @@
 package com.repopulse.auth.service;
 
-import com.repopulse.user.model.User;
 import com.repopulse.user.dao.UserDAO;
+import com.repopulse.user.model.User;
 
 public class AuthService {
 

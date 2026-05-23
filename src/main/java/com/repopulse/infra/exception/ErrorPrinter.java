@@ -1,7 +1,8 @@
 package com.repopulse.infra.exception;
 
 public class ErrorPrinter {
-    private ErrorPrinter() {}
+    private ErrorPrinter() {
+    }
 
     public static void print(AppException e) {
         System.out.println();
@@ -19,4 +20,3 @@ public class ErrorPrinter {
         return (s == null || s.isBlank()) ? "Something went wrong. Please try again." : s;
     }
 }
-

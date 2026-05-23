@@ -3,12 +3,7 @@ package com.repopulse.issue.dao;
 import com.repopulse.infra.database.DBConnection;
 import com.repopulse.issue.model.Milestone;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +16,9 @@ public class MilestoneDAO {
 
     public void createMilestone(Milestone m) {
         String sql = """
-            INSERT INTO milestones (repository_id, title, description, due_date, status, created_at, closed_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT INTO milestones (repository_id, title, description, due_date, status, created_at, closed_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setLong(1, m.getRepositoryId());

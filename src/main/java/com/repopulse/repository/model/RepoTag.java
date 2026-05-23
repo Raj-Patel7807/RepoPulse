@@ -13,6 +13,7 @@ public class RepoTag {
     public long getTagId() {
         return tagId;
     }
+
     public void setTagId(long tagId) {
         this.tagId = tagId;
     }
@@ -20,6 +21,7 @@ public class RepoTag {
     public long getRepositoryId() {
         return repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -27,6 +29,7 @@ public class RepoTag {
     public long getCommitId() {
         return commitId;
     }
+
     public void setCommitId(long commitId) {
         this.commitId = commitId;
     }
@@ -34,6 +37,7 @@ public class RepoTag {
     public String getTagName() {
         return tagName;
     }
+
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
@@ -41,6 +45,7 @@ public class RepoTag {
     public String getTagDescription() {
         return tagDescription;
     }
+
     public void setTagDescription(String tagDescription) {
         this.tagDescription = tagDescription;
     }
@@ -48,6 +53,7 @@ public class RepoTag {
     public Timestamp getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

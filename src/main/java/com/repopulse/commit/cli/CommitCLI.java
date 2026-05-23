@@ -2,10 +2,10 @@ package com.repopulse.commit.cli;
 
 import com.repopulse.commit.model.Commit;
 import com.repopulse.commit.service.CommitService;
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.repository.service.RepositoryService;
 
 import java.util.List;

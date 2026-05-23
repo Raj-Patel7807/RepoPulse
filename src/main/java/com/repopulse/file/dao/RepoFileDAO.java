@@ -2,14 +2,10 @@ package com.repopulse.file.dao;
 
 import com.repopulse.file.model.FileDiff;
 import com.repopulse.file.model.FileVersion;
-import com.repopulse.infra.database.DBConnection;
 import com.repopulse.file.model.RepoFile;
+import com.repopulse.infra.database.DBConnection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +18,9 @@ public class RepoFileDAO {
 
     public void createFile(RepoFile file) throws SQLException {
         String sql = """
-            INSERT INTO repo_files (repository_id, file_name, file_path, is_binary)
-            VALUES (?, ?, ?, ?)
-            """;
+                INSERT INTO repo_files (repository_id, file_name, file_path, is_binary)
+                VALUES (?, ?, ?, ?)
+                """;
 
         try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, file.getRepoId());
@@ -75,10 +71,10 @@ public class RepoFileDAO {
 
     public void updateFile(RepoFile file) throws SQLException {
         String sql = """
-            UPDATE repo_files
-            SET file_name = ?, file_path = ?, is_binary = ?
-            WHERE file_id = ?
-            """;
+                UPDATE repo_files
+                SET file_name = ?, file_path = ?, is_binary = ?
+                WHERE file_id = ?
+                """;
 
         try(PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, file.getFileName());
@@ -271,13 +267,7 @@ public class RepoFileDAO {
     }
 
     private RepoFile mapRowToRepoFile(ResultSet rs) throws SQLException {
-        RepoFile file = new RepoFile(
-                rs.getLong("file_id"),
-                rs.getLong("repository_id"),
-                rs.getString("file_name"),
-                rs.getString("file_path"),
-                rs.getBoolean("is_binary")
-        );
+        RepoFile file = new RepoFile(rs.getLong("file_id"), rs.getLong("repository_id"), rs.getString("file_name"), rs.getString("file_path"), rs.getBoolean("is_binary"));
 
         return file;
     }

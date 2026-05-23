@@ -9,11 +9,13 @@ public class IssueLabel {
     private String labelColor;
     private Timestamp createdAt;
 
-    public IssueLabel() {}
+    public IssueLabel() {
+    }
 
     public long getLabelId() {
         return this.labelId;
     }
+
     public void setLabelId(long labelId) {
         this.labelId = labelId;
     }
@@ -21,6 +23,7 @@ public class IssueLabel {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -28,6 +31,7 @@ public class IssueLabel {
     public String getLabelName() {
         return this.labelName;
     }
+
     public void setLabelName(String labelName) {
         this.labelName = labelName;
     }
@@ -35,6 +39,7 @@ public class IssueLabel {
     public String getLabelColor() {
         return this.labelColor;
     }
+
     public void setLabelColor(String labelColor) {
         this.labelColor = labelColor;
     }
@@ -42,6 +47,7 @@ public class IssueLabel {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

@@ -10,10 +10,6 @@ public class Notification {
     private boolean isRead;
     private Timestamp createdAt;
 
-    public enum NotificationType {
-        FOLLOW, PR, ISSUE, STAR, COMMENT
-    }
-
     public Notification() {
 
     }
@@ -21,6 +17,7 @@ public class Notification {
     public long getNotificationId() {
         return this.notificationId;
     }
+
     public void setNotificationId(long notificationId) {
         this.notificationId = notificationId;
     }
@@ -28,6 +25,7 @@ public class Notification {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -35,6 +33,7 @@ public class Notification {
     public NotificationType getNotificationType() {
         return this.notificationType;
     }
+
     public void setNotificationType(NotificationType notificationType) {
         this.notificationType = notificationType;
     }
@@ -42,6 +41,7 @@ public class Notification {
     public long getReferenceId() {
         return this.referenceId;
     }
+
     public void setReferenceId(long referenceId) {
         this.referenceId = referenceId;
     }
@@ -49,6 +49,7 @@ public class Notification {
     public boolean getIsRead() {
         return this.isRead;
     }
+
     public void setIsRead(boolean isRead) {
         this.isRead = isRead;
     }
@@ -56,7 +57,12 @@ public class Notification {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public enum NotificationType {
+        FOLLOW, PR, ISSUE, STAR, COMMENT
     }
 }

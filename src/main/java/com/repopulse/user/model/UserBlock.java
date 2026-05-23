@@ -14,6 +14,7 @@ public class UserBlock {
     public long getBlockerUserId() {
         return this.blockerUserId;
     }
+
     public void setBlockerUserId(long blockerUserId) {
         this.blockerUserId = blockerUserId;
     }
@@ -21,6 +22,7 @@ public class UserBlock {
     public long getBlockedUserId() {
         return this.blockedUserId;
     }
+
     public void setBlockedUserId(long blockedUserId) {
         this.blockedUserId = blockedUserId;
     }
@@ -28,6 +30,7 @@ public class UserBlock {
     public Timestamp getBlockedAt() {
         return this.blockedAt;
     }
+
     public void setBlockedAt(Timestamp blockedAt) {
         this.blockedAt = blockedAt;
     }

@@ -3,12 +3,7 @@ package com.repopulse.user.dao;
 import com.repopulse.infra.database.DBConnection;
 import com.repopulse.user.model.*;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,9 +190,9 @@ public class UserDAO {
 
     public void createReport(UserReport report) {
         String sql = """
-            INSERT INTO user_reports (reported_user_id, reporter_user_id, report_reason, report_description, report_status, reviewed_by_admin_id, created_at, reviewed_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT INTO user_reports (reported_user_id, reporter_user_id, report_reason, report_description, report_status, reviewed_by_admin_id, created_at, reviewed_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setLong(1, report.getReportedUserId());
@@ -255,8 +250,7 @@ public class UserDAO {
     public List<UserReport> getAllReports() {
         List<UserReport> reports = new ArrayList<>();
         String sql = "SELECT * FROM user_reports ORDER BY created_at DESC";
-        try(PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+        try(PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while(rs.next()) {
                 UserReport report = new UserReport();
                 report.setReportId(rs.getLong("report_id"));
@@ -279,10 +273,10 @@ public class UserDAO {
 
     public boolean reviewReport(long reportId, long adminUserId, UserReport.ReportStatus newStatus) {
         String sql = """
-            UPDATE user_reports
-            SET report_status = ?, reviewed_by_admin_id = ?, reviewed_at = CURRENT_TIMESTAMP
-            WHERE report_id = ?
-        """;
+                    UPDATE user_reports
+                    SET report_status = ?, reviewed_by_admin_id = ?, reviewed_at = CURRENT_TIMESTAMP
+                    WHERE report_id = ?
+                """;
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, newStatus.name());
             stmt.setLong(2, adminUserId);
@@ -413,12 +407,12 @@ public class UserDAO {
 
     public boolean hasBlockRelationship(long userA, long userB) {
         String sql = """
-            SELECT 1
-            FROM user_blocks
-            WHERE (blocker_user_id = ? AND blocked_user_id = ?)
-               OR (blocker_user_id = ? AND blocked_user_id = ?)
-            LIMIT 1
-        """;
+                    SELECT 1
+                    FROM user_blocks
+                    WHERE (blocker_user_id = ? AND blocked_user_id = ?)
+                       OR (blocker_user_id = ? AND blocked_user_id = ?)
+                    LIMIT 1
+                """;
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, userA);
             stmt.setLong(2, userB);
@@ -479,12 +473,7 @@ public class UserDAO {
     }
 
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
-        User user = new User(
-                rs.getLong("user_id"),
-                rs.getString("username"),
-                rs.getString("password_hash"),
-                rs.getString("email")
-        );
+        User user = new User(rs.getLong("user_id"), rs.getString("username"), rs.getString("password_hash"), rs.getString("email"));
         user.setProfileBio(rs.getString("profile_bio"));
         user.setProfileAvatarUrl(rs.getString("profile_avatar_url"));
 

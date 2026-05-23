@@ -16,6 +16,7 @@ public class Branch {
     public long getBranchId() {
         return this.branchId;
     }
+
     public void setBranchId(long branchId) {
         this.branchId = branchId;
     }
@@ -23,6 +24,7 @@ public class Branch {
     public long getRepoId() {
         return this.repoId;
     }
+
     public void setRepoId(long repoId) {
         this.repoId = repoId;
     }
@@ -30,6 +32,7 @@ public class Branch {
     public String getBranchName() {
         return this.branchName;
     }
+
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
@@ -37,6 +40,7 @@ public class Branch {
     public long getHeadCommitId() {
         return this.headCommitId;
     }
+
     public void setHeadCommitId(long headCommitId) {
         this.headCommitId = headCommitId;
     }
@@ -44,6 +48,7 @@ public class Branch {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

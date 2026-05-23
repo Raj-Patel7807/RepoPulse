@@ -4,12 +4,7 @@ import com.repopulse.infra.database.DBConnection;
 import com.repopulse.issue.model.IssueLabel;
 import com.repopulse.issue.model.RepoIssue;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +17,10 @@ public class RepoIssueDAO {
 
     public void createRepoIssue(RepoIssue issue) {
         String sql = """
-                    INSERT INTO repo_issues
-                    (repository_id, created_by_user_id, assigned_to_user_id, title, description, status, priority, created_at, closed_at, milestone_id)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    """;
+                INSERT INTO repo_issues
+                (repository_id, created_by_user_id, assigned_to_user_id, title, description, status, priority, created_at, closed_at, milestone_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setLong(1, issue.getRepositoryId());
@@ -148,7 +143,7 @@ public class RepoIssueDAO {
             if(affectedRows == 0) throw new SQLException("Creating label failed.");
 
             try(ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) label.setLabelId(rs.getLong(1));
+                if(rs.next()) label.setLabelId(rs.getLong(1));
             }
         } catch(SQLException e) {
             throw new RuntimeException("Error creating label", e);
@@ -201,7 +196,7 @@ public class RepoIssueDAO {
             stmt.setLong(1, issueId);
 
             try(ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) labelIds.add(rs.getLong("label_id"));
+                while(rs.next()) labelIds.add(rs.getLong("label_id"));
             }
         } catch(SQLException e) {
             throw new RuntimeException("Error fetching labels for issue", e);

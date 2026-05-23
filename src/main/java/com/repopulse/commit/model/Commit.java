@@ -11,11 +11,13 @@ public class Commit {
     private String commitMessage;
     private Timestamp committedAt;
 
-    public Commit() {}
+    public Commit() {
+    }
 
     public long getCommitId() {
         return commitId;
     }
+
     public void setCommitId(long commitId) {
         this.commitId = commitId;
     }
@@ -23,6 +25,7 @@ public class Commit {
     public long getRepoId() {
         return repoId;
     }
+
     public void setRepoId(long repoId) {
         this.repoId = repoId;
     }
@@ -30,6 +33,7 @@ public class Commit {
     public long getAuthorUserId() {
         return authorUserId;
     }
+
     public void setAuthorUserId(long authorUserId) {
         this.authorUserId = authorUserId;
     }
@@ -37,6 +41,7 @@ public class Commit {
     public Long getParentCommitId() {
         return parentCommitId;
     }
+
     public void setParentCommitId(Long parentCommitId) {
         this.parentCommitId = parentCommitId;
     }
@@ -44,6 +49,7 @@ public class Commit {
     public String getCommitHash() {
         return commitHash;
     }
+
     public void setCommitHash(String commitHash) {
         this.commitHash = commitHash;
     }
@@ -51,6 +57,7 @@ public class Commit {
     public String getCommitMessage() {
         return commitMessage;
     }
+
     public void setCommitMessage(String commitMessage) {
         this.commitMessage = commitMessage;
     }
@@ -58,6 +65,7 @@ public class Commit {
     public Timestamp getCommittedAt() {
         return committedAt;
     }
+
     public void setCommittedAt(Timestamp committedAt) {
         this.committedAt = committedAt;
     }

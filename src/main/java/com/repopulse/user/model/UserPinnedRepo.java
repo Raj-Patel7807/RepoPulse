@@ -14,6 +14,7 @@ public class UserPinnedRepo {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -21,6 +22,7 @@ public class UserPinnedRepo {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -28,6 +30,7 @@ public class UserPinnedRepo {
     public Timestamp getPinnedAt() {
         return this.pinnedAt;
     }
+
     public void setPinnedAt(Timestamp pinnedAt) {
         this.pinnedAt = pinnedAt;
     }

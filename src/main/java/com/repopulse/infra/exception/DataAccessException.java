@@ -5,4 +5,3 @@ public class DataAccessException extends AppException {
         super(userMessage, cause);
     }
 }
-

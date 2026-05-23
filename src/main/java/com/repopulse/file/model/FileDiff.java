@@ -17,6 +17,7 @@ public class FileDiff {
     public long getDiffId() {
         return this.diffId;
     }
+
     public void setDiffId(long diffId) {
         this.diffId = diffId;
     }
@@ -24,6 +25,7 @@ public class FileDiff {
     public long getOldFileVersionId() {
         return this.oldFileVersionId;
     }
+
     public void setOldFileVersionId(long oldFileVersionId) {
         this.oldFileVersionId = oldFileVersionId;
     }
@@ -31,6 +33,7 @@ public class FileDiff {
     public long getNewFileVersionId() {
         return this.newFileVersionId;
     }
+
     public void setNewFileVersionId(long newFileVersionId) {
         this.newFileVersionId = newFileVersionId;
     }
@@ -38,6 +41,7 @@ public class FileDiff {
     public String getDiffContent() {
         return this.diffContent;
     }
+
     public void setDiffContent(String diffContent) {
         this.diffContent = diffContent;
     }
@@ -45,6 +49,7 @@ public class FileDiff {
     public String getDiffFormat() {
         return this.diffFormat;
     }
+
     public void setDiffFormat(String diffFormat) {
         this.diffFormat = diffFormat;
     }
@@ -52,6 +57,7 @@ public class FileDiff {
     public Timestamp getGeneratedAt() {
         return this.generatedAt;
     }
+
     public void setGeneratedAt(Timestamp generatedAt) {
         this.generatedAt = generatedAt;
     }

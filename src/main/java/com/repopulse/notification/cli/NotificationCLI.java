@@ -1,8 +1,8 @@
 package com.repopulse.notification.cli;
 
 import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.notification.model.Notification;
 import com.repopulse.notification.service.NotificationService;
 
@@ -57,13 +57,7 @@ public class NotificationCLI {
 
         System.out.println("ID | TYPE | REF | READ | DATE");
         for(Notification n : notifications) {
-            System.out.println(
-                    n.getNotificationId() + " | " +
-                    n.getNotificationType() + " | " +
-                    n.getReferenceId() + " | " +
-                    (n.getIsRead() ? "YES" : "NO") + " | " +
-                    n.getCreatedAt()
-            );
+            System.out.println(n.getNotificationId() + " | " + n.getNotificationType() + " | " + n.getReferenceId() + " | " + (n.getIsRead() ? "YES" : "NO") + " | " + n.getCreatedAt());
         }
         CliUtils.waitForEnter();
     }

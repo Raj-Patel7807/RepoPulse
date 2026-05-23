@@ -1,12 +1,12 @@
 package com.repopulse.branch.cli;
 
-import com.repopulse.branch.service.BranchService;
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
-import com.repopulse.infra.exception.AppException;
 import com.repopulse.branch.model.Branch;
 import com.repopulse.branch.model.BranchMerge;
+import com.repopulse.branch.service.BranchService;
+import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.repository.service.RepositoryService;
 
 import java.sql.Timestamp;

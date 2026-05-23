@@ -5,11 +5,7 @@ import com.repopulse.pullrequest.model.PullRequest;
 import com.repopulse.pullrequest.model.PullRequestIssueLink;
 import com.repopulse.pullrequest.model.PullRequestReview;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,8 +48,8 @@ public class PullRequestDAO {
 
     public void updatePullRequestStatus(long prId, String status) {
         String sql = """
-                    UPDATE pull_requests SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE pull_request_id = ?
-                    """;
+                UPDATE pull_requests SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE pull_request_id = ?
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, status);
@@ -70,8 +66,8 @@ public class PullRequestDAO {
 
     public PullRequest getPullRequestById(long prId) {
         String sql = """
-                    SELECT * FROM pull_requests WHERE pull_request_id = ?
-                    """;
+                SELECT * FROM pull_requests WHERE pull_request_id = ?
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, prId);
@@ -91,8 +87,8 @@ public class PullRequestDAO {
         List<PullRequest> prs = new ArrayList<>();
 
         String sql = """
-                       SELECT * FROM pull_requests WHERE repository_id = ? ORDER BY created_at DESC
-                       """;
+                SELECT * FROM pull_requests WHERE repository_id = ? ORDER BY created_at DESC
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, repoId);
@@ -113,8 +109,8 @@ public class PullRequestDAO {
         List<PullRequest> prs = new ArrayList<>();
 
         String sql = """
-                    SELECT * FROM pull_requests WHERE created_by_user_id = ? ORDER BY created_at DESC
-                    """;
+                SELECT * FROM pull_requests WHERE created_by_user_id = ? ORDER BY created_at DESC
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, userId);

@@ -21,6 +21,7 @@ public class RepoCollaborator {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -28,6 +29,7 @@ public class RepoCollaborator {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -35,6 +37,7 @@ public class RepoCollaborator {
     public String getAccessRole() {
         return this.accessRole;
     }
+
     public void setAccessRole(String accessRole) {
         this.accessRole = accessRole;
     }
@@ -42,6 +45,7 @@ public class RepoCollaborator {
     public Timestamp getJoinedAt() {
         return this.joinedAt;
     }
+
     public void setJoinedAt(Timestamp joinedAt) {
         this.joinedAt = joinedAt;
     }

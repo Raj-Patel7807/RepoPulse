@@ -11,6 +11,7 @@ public class IssueLabelMapping {
     public long getIssueId() {
         return this.issueId;
     }
+
     public void setIssueId(long issueId) {
         this.issueId = issueId;
     }
@@ -18,6 +19,7 @@ public class IssueLabelMapping {
     public long getLabelId() {
         return this.labelId;
     }
+
     public void setLabelId(long labelId) {
         this.labelId = labelId;
     }

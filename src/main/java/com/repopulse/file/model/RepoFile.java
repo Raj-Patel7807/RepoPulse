@@ -25,6 +25,7 @@ public class RepoFile {
     public long getFileId() {
         return this.fileId;
     }
+
     public void setFileId(long fileId) {
         this.fileId = fileId;
     }
@@ -32,6 +33,7 @@ public class RepoFile {
     public long getRepoId() {
         return this.repoId;
     }
+
     public void setRepoId(long repoId) {
         this.repoId = repoId;
     }
@@ -39,6 +41,7 @@ public class RepoFile {
     public String getFileName() {
         return this.fileName;
     }
+
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
@@ -46,6 +49,7 @@ public class RepoFile {
     public String getFilePath() {
         return this.filePath;
     }
+
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
@@ -53,6 +57,7 @@ public class RepoFile {
     public boolean isBinary() {
         return this.isBinary;
     }
+
     public void setBinary(boolean isBinary) {
         this.isBinary = isBinary;
     }
@@ -60,6 +65,7 @@ public class RepoFile {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

@@ -7,20 +7,20 @@ public class Session {
     private static User currentUser;
     private static boolean adminSession = false;
 
-    public static void setCurrentUser(User user) {
-        currentUser = user;
-    }
-
     public static User getCurrentUser() {
         return currentUser;
     }
 
-    public static void setAdminSession(boolean admin) {
-        adminSession = admin;
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
     public static boolean isAdminSession() {
         return adminSession;
+    }
+
+    public static void setAdminSession(boolean admin) {
+        adminSession = admin;
     }
 
     public static void logout() {

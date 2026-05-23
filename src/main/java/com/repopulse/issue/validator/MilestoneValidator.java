@@ -1,7 +1,8 @@
 package com.repopulse.issue.validator;
 
 public class MilestoneValidator {
-    private MilestoneValidator() {}
+    private MilestoneValidator() {
+    }
 
     public static void validateTitle(String title) {
         if(title == null || title.trim().isEmpty()) {

@@ -13,13 +13,6 @@ public class UserReport {
     private Timestamp createdAt;
     private Timestamp reviewedAt;
 
-    public enum ReportReason {
-        SPAM, ABUSE, FAKE_ACCOUNT
-    }
-    public enum ReportStatus {
-        OPEN, UNDER_REVIEW, RESOLVED, REJECTED
-    }
-
     public UserReport() {
 
     }
@@ -27,6 +20,7 @@ public class UserReport {
     public long getReportId() {
         return this.reportId;
     }
+
     public void setReportId(long reportId) {
         this.reportId = reportId;
     }
@@ -34,6 +28,7 @@ public class UserReport {
     public long getReportedUserId() {
         return this.reportedUserId;
     }
+
     public void setReportedUserId(long reportedUserId) {
         this.reportedUserId = reportedUserId;
     }
@@ -41,6 +36,7 @@ public class UserReport {
     public long getReporterUserId() {
         return this.reporterUserId;
     }
+
     public void setReporterUserId(long reporterUserId) {
         this.reporterUserId = reporterUserId;
     }
@@ -48,6 +44,7 @@ public class UserReport {
     public ReportReason getReportReason() {
         return this.reportReason;
     }
+
     public void setReportReason(ReportReason reportReason) {
         this.reportReason = reportReason;
     }
@@ -55,6 +52,7 @@ public class UserReport {
     public String getReportDescription() {
         return this.reportDescription;
     }
+
     public void setReportDescription(String reportDescription) {
         this.reportDescription = reportDescription;
     }
@@ -62,6 +60,7 @@ public class UserReport {
     public ReportStatus getReportStatus() {
         return this.reportStatus;
     }
+
     public void setReportStatus(ReportStatus reportStatus) {
         this.reportStatus = reportStatus;
     }
@@ -69,6 +68,7 @@ public class UserReport {
     public Long getReviewedByAdminId() {
         return this.reviewedByAdminId;
     }
+
     public void setReviewedByAdminId(Long reviewedByAdminId) {
         this.reviewedByAdminId = reviewedByAdminId;
     }
@@ -76,6 +76,7 @@ public class UserReport {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -83,7 +84,16 @@ public class UserReport {
     public Timestamp getReviewedAt() {
         return this.reviewedAt;
     }
+
     public void setReviewedAt(Timestamp reviewedAt) {
         this.reviewedAt = reviewedAt;
+    }
+
+    public enum ReportReason {
+        SPAM, ABUSE, FAKE_ACCOUNT
+    }
+
+    public enum ReportStatus {
+        OPEN, UNDER_REVIEW, RESOLVED, REJECTED
     }
 }

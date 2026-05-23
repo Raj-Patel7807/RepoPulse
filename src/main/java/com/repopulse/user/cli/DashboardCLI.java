@@ -1,7 +1,7 @@
 package com.repopulse.user.cli;
 
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.notification.cli.NotificationCLI;
 import com.repopulse.repository.cli.RepositoryCLI;
 import com.repopulse.user.model.User;

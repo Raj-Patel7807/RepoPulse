@@ -1,15 +1,10 @@
 package com.repopulse.repository.dao;
 
-import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.infra.database.DBConnection;
+import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.repository.model.*;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.Types;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -380,15 +375,15 @@ public class RepositoryDAO {
     public int getStarCountByRepository(long repositoryId) {
         String sql = "SELECT COUNT(*) FROM repo_stars WHERE repository_id = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, repositoryId);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
                     return rs.getInt(1);
                 }
             }
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             throw new RuntimeException("Error fetching star count", e);
         }
 
@@ -480,12 +475,12 @@ public class RepositoryDAO {
 
     public void addOrUpdateWatcher(RepoWatcher watcher) {
         String sql = """
-            INSERT INTO repo_watchers (user_id, repository_id, watch_level, watched_at)
-            VALUES (?, ?, ?, ?)
-            ON CONFLICT (user_id, repository_id)
-            DO UPDATE SET watch_level = EXCLUDED.watch_level,
-                          watched_at = EXCLUDED.watched_at
-        """;
+                    INSERT INTO repo_watchers (user_id, repository_id, watch_level, watched_at)
+                    VALUES (?, ?, ?, ?)
+                    ON CONFLICT (user_id, repository_id)
+                    DO UPDATE SET watch_level = EXCLUDED.watch_level,
+                                  watched_at = EXCLUDED.watched_at
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, watcher.getUserId());

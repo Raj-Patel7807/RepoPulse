@@ -2,14 +2,10 @@ package com.repopulse.branch.dao;
 
 import com.repopulse.branch.model.Branch;
 import com.repopulse.branch.model.BranchMerge;
-import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.infra.database.DBConnection;
+import com.repopulse.infra.exception.DataAccessException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,9 +157,9 @@ public class BranchDAO {
 
     public boolean updateBranchMerge(BranchMerge merge) {
         String sql = """
-                      UPDATE branch_merges SET repository_id=?, source_branch_id=?, target_branch_id=?, merge_commit_id=?, merged_by_user_id=?, merge_strategy=?, merged_at=?
-                      WHERE merge_id=?
-                      """;
+                UPDATE branch_merges SET repository_id=?, source_branch_id=?, target_branch_id=?, merge_commit_id=?, merged_by_user_id=?, merge_strategy=?, merged_at=?
+                WHERE merge_id=?
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, merge.getRepositoryId());

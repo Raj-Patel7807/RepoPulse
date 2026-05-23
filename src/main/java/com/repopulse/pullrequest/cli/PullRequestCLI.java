@@ -1,11 +1,11 @@
 package com.repopulse.pullrequest.cli;
 
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
-import com.repopulse.pullrequest.model.PullRequestIssueLink;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.pullrequest.model.PullRequest;
+import com.repopulse.pullrequest.model.PullRequestIssueLink;
 import com.repopulse.pullrequest.model.PullRequestReview;
 import com.repopulse.pullrequest.service.PullRequestService;
 import com.repopulse.repository.service.RepositoryService;

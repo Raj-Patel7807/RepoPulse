@@ -1,7 +1,7 @@
 package com.repopulse.repository.cli;
 
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.repository.model.Repository;
 import com.repopulse.repository.service.RepositoryService;
 
@@ -40,7 +40,7 @@ public class RepositoryCLI {
 
                 RepoDetailCLI repoDetailCLI = new RepoDetailCLI(repoId);
                 repoDetailCLI.start();
-                
+
             } else if(choice == 3) {
                 String name = CliUtils.getStringInput("Enter Repo Name: ");
                 // I have to take Input for giving user choice to make repo Private Or Public;

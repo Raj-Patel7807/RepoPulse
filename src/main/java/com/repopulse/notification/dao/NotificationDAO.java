@@ -3,11 +3,7 @@ package com.repopulse.notification.dao;
 import com.repopulse.infra.database.DBConnection;
 import com.repopulse.notification.model.Notification;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

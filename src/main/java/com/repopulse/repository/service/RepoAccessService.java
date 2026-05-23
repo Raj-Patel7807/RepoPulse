@@ -65,9 +65,7 @@ public class RepoAccessService {
             return true;
         }
 
-        return "OWNER".equalsIgnoreCase(role)
-                || "MAINTAINER".equalsIgnoreCase(role)
-                || "WRITE".equalsIgnoreCase(role);
+        return "OWNER".equalsIgnoreCase(role) || "MAINTAINER".equalsIgnoreCase(role) || "WRITE".equalsIgnoreCase(role);
     }
 }
 

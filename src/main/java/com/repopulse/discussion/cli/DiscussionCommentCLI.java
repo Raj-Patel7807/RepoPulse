@@ -1,11 +1,11 @@
 package com.repopulse.discussion.cli;
 
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
-import com.repopulse.infra.exception.AppException;
 import com.repopulse.discussion.model.DiscussionComment;
 import com.repopulse.discussion.service.DiscussionCommentService;
+import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.repository.service.RepositoryService;
 
 import java.sql.Timestamp;
@@ -86,17 +86,7 @@ public class DiscussionCommentCLI {
         String body = CliUtils.getStringInput("Comment: ");
         long userId = Session.getCurrentUser().getUserId();
 
-        discussionCommentService.createComment(
-                userId,
-                target.commitId,
-                target.pullRequestId,
-                target.issueId,
-                null,
-                body,
-                null,
-                null,
-                new Timestamp(System.currentTimeMillis())
-        );
+        discussionCommentService.createComment(userId, target.commitId, target.pullRequestId, target.issueId, null, body, null, null, new Timestamp(System.currentTimeMillis()));
         System.out.println("Comment added.");
         CliUtils.waitForEnter();
     }
@@ -114,17 +104,7 @@ public class DiscussionCommentCLI {
 
         String body = CliUtils.getStringInput("Reply: ");
         long userId = Session.getCurrentUser().getUserId();
-        discussionCommentService.createComment(
-                userId,
-                parent.getCommitId(),
-                parent.getPullRequestId(),
-                parent.getIssueId(),
-                parentCommentId,
-                body,
-                null,
-                null,
-                new Timestamp(System.currentTimeMillis())
-        );
+        discussionCommentService.createComment(userId, parent.getCommitId(), parent.getPullRequestId(), parent.getIssueId(), parentCommentId, body, null, null, new Timestamp(System.currentTimeMillis()));
         System.out.println("Reply added.");
         CliUtils.waitForEnter();
     }
@@ -149,12 +129,6 @@ public class DiscussionCommentCLI {
         return input;
     }
 
-    private static class TargetInput {
-        Long commitId;
-        Long pullRequestId;
-        Long issueId;
-    }
-
     private void ensureWriteAccess() {
         if(Session.getCurrentUser() == null) {
             throw new AppException("Please login first.");
@@ -162,5 +136,11 @@ public class DiscussionCommentCLI {
         if(!repositoryService.canWriteRepository(repoId, Session.getCurrentUser().getUserId())) {
             throw new AppException("You do not have write access to this repository.");
         }
+    }
+
+    private static class TargetInput {
+        Long commitId;
+        Long pullRequestId;
+        Long issueId;
     }
 }

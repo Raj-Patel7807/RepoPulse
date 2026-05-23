@@ -2,21 +2,17 @@ package com.repopulse.infra.config;
 
 import com.repopulse.infra.exception.AppException;
 
-import java.util.Properties;
 import java.io.InputStream;
+import java.util.Properties;
 
 public class AppConfig {
     private static Properties props = new Properties();
 
     static {
         try {
-            InputStream input = AppConfig.class
-                    .getClassLoader()
-                    .getResourceAsStream("config.properties");
+            InputStream input = AppConfig.class.getClassLoader().getResourceAsStream("config.properties");
             if(input == null) {
-                throw new AppException(
-                        "Missing `config.properties`. Create `src/main/resources/config.properties` (you can copy `config.properties.example`)."
-                );
+                throw new AppException("Missing `config.properties`. Create `src/main/resources/config.properties` (you can copy `config.properties.example`).");
             }
             props.load(input);
         } catch(Exception e) {

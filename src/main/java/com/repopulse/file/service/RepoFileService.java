@@ -1,11 +1,11 @@
 package com.repopulse.file.service;
 
-import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.file.dao.RepoFileDAO;
 import com.repopulse.file.model.FileDiff;
 import com.repopulse.file.model.FileVersion;
 import com.repopulse.file.model.RepoFile;
 import com.repopulse.file.validator.RepoFileValidator;
+import com.repopulse.infra.exception.DataAccessException;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -3,7 +3,8 @@ package com.repopulse.infra.session;
 import com.repopulse.infra.exception.AppException;
 
 public class Authz {
-    private Authz() {}
+    private Authz() {
+    }
 
     public static boolean isLoggedIn() {
         return Session.getCurrentUser() != null;
@@ -15,4 +16,3 @@ public class Authz {
         }
     }
 }
-

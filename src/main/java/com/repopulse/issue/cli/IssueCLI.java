@@ -1,13 +1,13 @@
 package com.repopulse.issue.cli;
 
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.issue.model.IssueLabel;
 import com.repopulse.issue.model.Milestone;
-import com.repopulse.issue.service.MilestoneService;
 import com.repopulse.issue.model.RepoIssue;
+import com.repopulse.issue.service.MilestoneService;
 import com.repopulse.issue.service.RepoIssueService;
 import com.repopulse.repository.service.RepositoryService;
 

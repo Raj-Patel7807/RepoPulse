@@ -17,6 +17,7 @@ public class PullRequestReview {
     public long getReviewId() {
         return this.reviewId;
     }
+
     public void setReviewId(long reviewId) {
         this.reviewId = reviewId;
     }
@@ -24,6 +25,7 @@ public class PullRequestReview {
     public long getPullRequestId() {
         return this.pullRequestId;
     }
+
     public void setPullRequestId(long pullRequestId) {
         this.pullRequestId = pullRequestId;
     }
@@ -31,6 +33,7 @@ public class PullRequestReview {
     public long getReviewerUserId() {
         return this.reviewerUserId;
     }
+
     public void setReviewerUserId(long reviewerUserId) {
         this.reviewerUserId = reviewerUserId;
     }
@@ -38,6 +41,7 @@ public class PullRequestReview {
     public String getReviewComment() {
         return this.reviewComment;
     }
+
     public void setReviewComment(String reviewComment) {
         this.reviewComment = reviewComment;
     }
@@ -45,6 +49,7 @@ public class PullRequestReview {
     public String getReviewStatus() {
         return this.reviewStatus;
     }
+
     public void setReviewStatus(String reviewStatus) {
         this.reviewStatus = reviewStatus;
     }
@@ -52,6 +57,7 @@ public class PullRequestReview {
     public Timestamp getReviewedAt() {
         return this.reviewedAt;
     }
+
     public void setReviewedAt(Timestamp reviewedAt) {
         this.reviewedAt = reviewedAt;
     }

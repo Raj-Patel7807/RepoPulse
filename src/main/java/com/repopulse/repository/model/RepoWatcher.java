@@ -8,12 +8,6 @@ public class RepoWatcher {
     private WatchLevel watchLevel;
     private Timestamp watchedAt;
 
-    public enum WatchLevel {
-        ALL,
-        PARTICIPATING,
-        NONE
-    }
-
     public RepoWatcher() {
 
     }
@@ -21,6 +15,7 @@ public class RepoWatcher {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -28,6 +23,7 @@ public class RepoWatcher {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -35,6 +31,7 @@ public class RepoWatcher {
     public WatchLevel getWatchLevel() {
         return this.watchLevel;
     }
+
     public void setWatchLevel(WatchLevel watchLevel) {
         this.watchLevel = watchLevel;
     }
@@ -42,7 +39,12 @@ public class RepoWatcher {
     public Timestamp getWatchedAt() {
         return this.watchedAt;
     }
+
     public void setWatchedAt(Timestamp watchedAt) {
         this.watchedAt = watchedAt;
+    }
+
+    public enum WatchLevel {
+        ALL, PARTICIPATING, NONE
     }
 }

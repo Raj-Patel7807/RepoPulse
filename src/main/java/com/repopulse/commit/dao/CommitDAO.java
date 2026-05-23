@@ -1,15 +1,10 @@
 package com.repopulse.commit.dao;
 
-import com.repopulse.infra.exception.DataAccessException;
 import com.repopulse.commit.model.Commit;
 import com.repopulse.infra.database.DBConnection;
+import com.repopulse.infra.exception.DataAccessException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 

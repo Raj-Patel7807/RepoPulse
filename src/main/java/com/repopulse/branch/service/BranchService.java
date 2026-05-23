@@ -1,7 +1,7 @@
 package com.repopulse.branch.service;
 
-import com.repopulse.branch.model.Branch;
 import com.repopulse.branch.dao.BranchDAO;
+import com.repopulse.branch.model.Branch;
 import com.repopulse.branch.model.BranchMerge;
 import com.repopulse.branch.validator.BranchValidator;
 

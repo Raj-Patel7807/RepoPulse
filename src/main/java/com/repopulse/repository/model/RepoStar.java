@@ -14,6 +14,7 @@ public class RepoStar {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -21,6 +22,7 @@ public class RepoStar {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -28,6 +30,7 @@ public class RepoStar {
     public Timestamp getStarredAt() {
         return this.starredAt;
     }
+
     public void setStarredAt(Timestamp starredAt) {
         this.starredAt = starredAt;
     }

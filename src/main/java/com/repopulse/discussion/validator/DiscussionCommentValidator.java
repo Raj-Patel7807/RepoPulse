@@ -1,7 +1,8 @@
 package com.repopulse.discussion.validator;
 
 public class DiscussionCommentValidator {
-    private DiscussionCommentValidator() {}
+    private DiscussionCommentValidator() {
+    }
 
     public static void validateBody(String commentBody) {
         if(commentBody == null || commentBody.trim().isEmpty()) {

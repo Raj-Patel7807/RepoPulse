@@ -16,6 +16,7 @@ public class RepoClone {
     public long getCloneId() {
         return this.cloneId;
     }
+
     public void setCloneId(long cloneId) {
         this.cloneId = cloneId;
     }
@@ -23,6 +24,7 @@ public class RepoClone {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -30,6 +32,7 @@ public class RepoClone {
     public long getClonedByUserId() {
         return this.clonedByUserId;
     }
+
     public void setClonedByUserId(long clonedByUserId) {
         this.clonedByUserId = clonedByUserId;
     }
@@ -37,6 +40,7 @@ public class RepoClone {
     public String getCloneType() {
         return this.cloneType;
     }
+
     public void setCloneType(String cloneType) {
         this.cloneType = cloneType;
     }
@@ -44,6 +48,7 @@ public class RepoClone {
     public Timestamp getClonedAt() {
         return this.clonedAt;
     }
+
     public void setClonedAt(Timestamp clonedAt) {
         this.clonedAt = clonedAt;
     }

@@ -21,6 +21,7 @@ public class PullRequest {
     public long getPullRequestId() {
         return this.pullRequestId;
     }
+
     public void setPullRequestId(long pullRequestId) {
         this.pullRequestId = pullRequestId;
     }
@@ -28,6 +29,7 @@ public class PullRequest {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -35,6 +37,7 @@ public class PullRequest {
     public long getSourceBranchId() {
         return this.sourceBranchId;
     }
+
     public void setSourceBranchId(long sourceBranchId) {
         this.sourceBranchId = sourceBranchId;
     }
@@ -42,6 +45,7 @@ public class PullRequest {
     public long getTargetBranchId() {
         return this.targetBranchId;
     }
+
     public void setTargetBranchId(long targetBranchId) {
         this.targetBranchId = targetBranchId;
     }
@@ -49,6 +53,7 @@ public class PullRequest {
     public long getCreatedByUserId() {
         return this.createdByUserId;
     }
+
     public void setCreatedByUserId(long createdByUserId) {
         this.createdByUserId = createdByUserId;
     }
@@ -56,6 +61,7 @@ public class PullRequest {
     public String getTitle() {
         return this.title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -63,6 +69,7 @@ public class PullRequest {
     public String getDescription() {
         return this.description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -70,6 +77,7 @@ public class PullRequest {
     public String getStatus() {
         return this.status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -77,6 +85,7 @@ public class PullRequest {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -84,6 +93,7 @@ public class PullRequest {
     public Timestamp getUpdatedAt() {
         return this.updatedAt;
     }
+
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }

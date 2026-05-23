@@ -15,17 +15,6 @@ public class RepoIssue {
     private Timestamp closedAt;
     private Long milestoneId;
 
-    public enum Status {
-        OPEN,
-        CLOSED
-    }
-
-    public enum Priority {
-        LOW,
-        MEDIUM,
-        HIGH
-    }
-
     public RepoIssue() {
 
     }
@@ -33,6 +22,7 @@ public class RepoIssue {
     public long getIssueId() {
         return this.issueId;
     }
+
     public void setIssueId(long issueId) {
         this.issueId = issueId;
     }
@@ -40,6 +30,7 @@ public class RepoIssue {
     public long getRepositoryId() {
         return this.repositoryId;
     }
+
     public void setRepositoryId(long repositoryId) {
         this.repositoryId = repositoryId;
     }
@@ -47,6 +38,7 @@ public class RepoIssue {
     public long getCreatedByUserId() {
         return this.createdByUserId;
     }
+
     public void setCreatedByUserId(long createdByUserId) {
         this.createdByUserId = createdByUserId;
     }
@@ -54,6 +46,7 @@ public class RepoIssue {
     public Long getAssignedToUserId() {
         return this.assignedToUserId;
     }
+
     public void setAssignedToUserId(Long assignedToUserId) {
         this.assignedToUserId = assignedToUserId;
     }
@@ -61,6 +54,7 @@ public class RepoIssue {
     public String getTitle() {
         return this.title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -68,6 +62,7 @@ public class RepoIssue {
     public String getDescription() {
         return this.description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -75,6 +70,7 @@ public class RepoIssue {
     public Status getStatus() {
         return this.status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -82,6 +78,7 @@ public class RepoIssue {
     public Priority getPriority() {
         return this.priority;
     }
+
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
@@ -89,6 +86,7 @@ public class RepoIssue {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -96,6 +94,7 @@ public class RepoIssue {
     public Timestamp getClosedAt() {
         return this.closedAt;
     }
+
     public void setClosedAt(Timestamp closedAt) {
         this.closedAt = closedAt;
     }
@@ -103,7 +102,16 @@ public class RepoIssue {
     public Long getMilestoneId() {
         return this.milestoneId;
     }
+
     public void setMilestoneId(Long milestoneId) {
         this.milestoneId = milestoneId;
+    }
+
+    public enum Status {
+        OPEN, CLOSED
+    }
+
+    public enum Priority {
+        LOW, MEDIUM, HIGH
     }
 }

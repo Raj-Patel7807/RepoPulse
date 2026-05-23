@@ -1,8 +1,8 @@
 package com.repopulse.auth.cli;
 
 import com.repopulse.auth.service.AuthService;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.user.cli.GuestCLI;
 import com.repopulse.user.model.User;
 

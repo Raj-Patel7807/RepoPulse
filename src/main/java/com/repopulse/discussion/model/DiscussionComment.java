@@ -21,6 +21,7 @@ public class DiscussionComment {
     public long getCommentId() {
         return this.commentId;
     }
+
     public void setCommentId(long commentId) {
         this.commentId = commentId;
     }
@@ -28,6 +29,7 @@ public class DiscussionComment {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -35,6 +37,7 @@ public class DiscussionComment {
     public Long getCommitId() {
         return this.commitId;
     }
+
     public void setCommitId(Long commitId) {
         this.commitId = commitId;
     }
@@ -42,6 +45,7 @@ public class DiscussionComment {
     public Long getPullRequestId() {
         return this.pullRequestId;
     }
+
     public void setPullRequestId(Long pullRequestId) {
         this.pullRequestId = pullRequestId;
     }
@@ -49,6 +53,7 @@ public class DiscussionComment {
     public Long getIssueId() {
         return this.issueId;
     }
+
     public void setIssueId(Long issueId) {
         this.issueId = issueId;
     }
@@ -56,6 +61,7 @@ public class DiscussionComment {
     public Long getParentCommentId() {
         return this.parentCommentId;
     }
+
     public void setParentCommentId(Long parentCommentId) {
         this.parentCommentId = parentCommentId;
     }
@@ -63,6 +69,7 @@ public class DiscussionComment {
     public String getCommentBody() {
         return this.commentBody;
     }
+
     public void setCommentBody(String commentBody) {
         this.commentBody = commentBody;
     }
@@ -70,6 +77,7 @@ public class DiscussionComment {
     public Long getFileId() {
         return this.fileId;
     }
+
     public void setFileId(Long fileId) {
         this.fileId = fileId;
     }
@@ -77,6 +85,7 @@ public class DiscussionComment {
     public Integer getLineNumber() {
         return this.lineNumber;
     }
+
     public void setLineNumber(Integer lineNumber) {
         this.lineNumber = lineNumber;
     }
@@ -84,6 +93,7 @@ public class DiscussionComment {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

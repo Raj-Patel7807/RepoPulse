@@ -1,9 +1,9 @@
 package com.repopulse.release.cli;
 
-import com.repopulse.infra.session.Authz;
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.exception.AppException;
+import com.repopulse.infra.session.Authz;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.release.model.RepoRelease;
 import com.repopulse.release.service.RepoReleaseService;
 import com.repopulse.repository.service.RepositoryService;

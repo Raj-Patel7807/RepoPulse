@@ -1,7 +1,7 @@
 package com.repopulse.user.cli;
 
-import com.repopulse.infra.util.CliUtils;
 import com.repopulse.infra.session.Session;
+import com.repopulse.infra.util.CliUtils;
 import com.repopulse.user.model.UserReport;
 import com.repopulse.user.service.UserService;
 
@@ -63,8 +63,7 @@ public class AdminCLI {
         } else {
             System.out.println("id | reported | reporter | reason | status | reviewed_by");
             for(UserReport report : reports) {
-                System.out.println(report.getReportId() + " | " + report.getReportedUserId() + " | " + report.getReporterUserId() + " | "
-                        + report.getReportReason() + " | " + report.getReportStatus() + " | " + report.getReviewedByAdminId());
+                System.out.println(report.getReportId() + " | " + report.getReportedUserId() + " | " + report.getReporterUserId() + " | " + report.getReportReason() + " | " + report.getReportStatus() + " | " + report.getReviewedByAdminId());
             }
         }
         CliUtils.waitForEnter();

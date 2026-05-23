@@ -1,14 +1,9 @@
 package com.repopulse.discussion.dao;
 
-import com.repopulse.infra.database.DBConnection;
 import com.repopulse.discussion.model.DiscussionComment;
+import com.repopulse.infra.database.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +16,10 @@ public class DiscussionCommentDAO {
 
     public void createComment(DiscussionComment comment) {
         String sql = """
-            INSERT INTO discussion_comments
-            (user_id, commit_id, pull_request_id, issue_id, parent_comment_id, comment_body, file_id, line_number, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT INTO discussion_comments
+                    (user_id, commit_id, pull_request_id, issue_id, parent_comment_id, comment_body, file_id, line_number, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
         try(PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setLong(1, comment.getUserId());

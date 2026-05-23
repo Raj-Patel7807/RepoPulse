@@ -14,11 +14,13 @@ public class Repository {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public Repository() {}
+    public Repository() {
+    }
 
     public long getRepoId() {
         return repoId;
     }
+
     public void setRepoId(long repoId) {
         this.repoId = repoId;
     }
@@ -26,6 +28,7 @@ public class Repository {
     public String getRepoName() {
         return repoName;
     }
+
     public void setRepoName(String repoName) {
         this.repoName = repoName;
     }
@@ -33,6 +36,7 @@ public class Repository {
     public String getRepoDesc() {
         return repoDesc;
     }
+
     public void setRepoDesc(String repoDesc) {
         this.repoDesc = repoDesc;
     }
@@ -40,6 +44,7 @@ public class Repository {
     public long getRepoOwnerUserId() {
         return repoOwnerUserId;
     }
+
     public void setRepoOwnerUserId(long repoOwnerUserId) {
         this.repoOwnerUserId = repoOwnerUserId;
     }
@@ -47,6 +52,7 @@ public class Repository {
     public String getRepoVisibilityType() {
         return repoVisibilityType;
     }
+
     public void setRepoVisibilityType(String repoVisibilityType) {
         this.repoVisibilityType = repoVisibilityType;
     }
@@ -54,6 +60,7 @@ public class Repository {
     public Long getDefaultBranchId() {
         return defaultBranchId;
     }
+
     public void setDefaultBranchId(Long defaultBranchId) {
         this.defaultBranchId = defaultBranchId;
     }
@@ -61,6 +68,7 @@ public class Repository {
     public Long getParentRepositoryId() {
         return parentRepositoryId;
     }
+
     public void setParentRepositoryId(Long parentRepositoryId) {
         this.parentRepositoryId = parentRepositoryId;
     }
@@ -68,6 +76,7 @@ public class Repository {
     public Long getForkedFromCommitId() {
         return forkedFromCommitId;
     }
+
     public void setForkedFromCommitId(Long forkedFromCommitId) {
         this.forkedFromCommitId = forkedFromCommitId;
     }
@@ -75,6 +84,7 @@ public class Repository {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
@@ -82,6 +92,7 @@ public class Repository {
     public Timestamp getUpdatedAt() {
         return this.updatedAt;
     }
+
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }

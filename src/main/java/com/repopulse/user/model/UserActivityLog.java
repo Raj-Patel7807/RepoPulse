@@ -10,15 +10,13 @@ public class UserActivityLog {
     private String activityMetadata; // JSON stored as String
     private Timestamp createdAt;
 
-    public enum ActivityType {
-        CREATE_REPOSITORY, COMMIT, MERGE, FOLLOW
+    public UserActivityLog() {
     }
-
-    public UserActivityLog() {}
 
     public long getActivityId() {
         return this.activityId;
     }
+
     public void setActivityId(long activityId) {
         this.activityId = activityId;
     }
@@ -26,6 +24,7 @@ public class UserActivityLog {
     public long getUserId() {
         return this.userId;
     }
+
     public void setUserId(long userId) {
         this.userId = userId;
     }
@@ -33,6 +32,7 @@ public class UserActivityLog {
     public ActivityType getActivityType() {
         return this.activityType;
     }
+
     public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
@@ -40,6 +40,7 @@ public class UserActivityLog {
     public long getReferenceId() {
         return this.referenceId;
     }
+
     public void setReferenceId(long referenceId) {
         this.referenceId = referenceId;
     }
@@ -47,6 +48,7 @@ public class UserActivityLog {
     public String getActivityMetadata() {
         return this.activityMetadata;
     }
+
     public void setActivityMetadata(String activityMetadata) {
         this.activityMetadata = activityMetadata;
     }
@@ -54,7 +56,12 @@ public class UserActivityLog {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public enum ActivityType {
+        CREATE_REPOSITORY, COMMIT, MERGE, FOLLOW
     }
 }

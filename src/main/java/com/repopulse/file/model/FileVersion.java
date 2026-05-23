@@ -18,6 +18,7 @@ public class FileVersion {
     public long getFileVersionId() {
         return this.fileVersionId;
     }
+
     public void setFileVersionId(long fileVersionId) {
         this.fileVersionId = fileVersionId;
     }
@@ -25,6 +26,7 @@ public class FileVersion {
     public long getFileId() {
         return this.fileId;
     }
+
     public void setFileId(long fileId) {
         this.fileId = fileId;
     }
@@ -32,6 +34,7 @@ public class FileVersion {
     public long getCommitId() {
         return this.commitId;
     }
+
     public void setCommitId(long commitId) {
         this.commitId = commitId;
     }
@@ -39,6 +42,7 @@ public class FileVersion {
     public String getContentHash() {
         return this.contentHash;
     }
+
     public void setContentHash(String contentHash) {
         this.contentHash = contentHash;
     }
@@ -46,6 +50,7 @@ public class FileVersion {
     public long getFileSizeBytes() {
         return this.fileSizeBytes;
     }
+
     public void setFileSizeBytes(long fileSizeBytes) {
         this.fileSizeBytes = fileSizeBytes;
     }
@@ -53,6 +58,7 @@ public class FileVersion {
     public String getChangeType() {
         return this.changeType;
     }
+
     public void setChangeType(String changeType) {
         this.changeType = changeType;
     }
@@ -60,6 +66,7 @@ public class FileVersion {
     public Timestamp getCreatedAt() {
         return this.createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }

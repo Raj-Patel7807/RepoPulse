@@ -5,10 +5,6 @@ public class PullRequestIssueLink {
     private long issueId;
     private LinkType linkType;
 
-    public enum LinkType {
-        CLOSES, REFERENCES
-    }
-
     public PullRequestIssueLink() {
 
     }
@@ -16,6 +12,7 @@ public class PullRequestIssueLink {
     public long getPullRequestId() {
         return this.pullRequestId;
     }
+
     public void setPullRequestId(long pullRequestId) {
         this.pullRequestId = pullRequestId;
     }
@@ -23,6 +20,7 @@ public class PullRequestIssueLink {
     public long getIssueId() {
         return this.issueId;
     }
+
     public void setIssueId(long issueId) {
         this.issueId = issueId;
     }
@@ -30,7 +28,12 @@ public class PullRequestIssueLink {
     public LinkType getLinkType() {
         return this.linkType;
     }
+
     public void setLinkType(LinkType linkType) {
         this.linkType = linkType;
+    }
+
+    public enum LinkType {
+        CLOSES, REFERENCES
     }
 }
