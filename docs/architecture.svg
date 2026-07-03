@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 860" role="img" aria-label="RepoPulse architecture diagram">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#546E7A"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .box-text { font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 600; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+      .box-text-dark { fill: #1a1a1a; }
+      .line { fill: none; stroke: #546E7A; stroke-width: 2; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="980" height="860" fill="#FAFAFA"/>
+
+  <!-- Terminal Client -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="20" width="160" height="44" rx="8" fill="#1E88E5"/>
+    <text x="490" y="42" class="box-text">Terminal Client</text>
+  </g>
+
+  <!-- App Router -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="96" width="160" height="44" rx="8" fill="#1565C0"/>
+    <text x="490" y="118" class="box-text">App Router</text>
+  </g>
+
+  <!-- CLI nodes -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="188" width="130" height="44" rx="8" fill="#8E24AA"/>
+    <text x="135" y="210" class="box-text">AuthCLI</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="260" y="188" width="160" height="44" rx="8" fill="#8E24AA"/>
+    <text x="340" y="210" class="box-text">DashboardCLI</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="480" y="188" width="130" height="44" rx="8" fill="#8E24AA"/>
+    <text x="545" y="210" class="box-text">GuestCLI</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="670" y="188" width="130" height="44" rx="8" fill="#8E24AA"/>
+    <text x="735" y="210" class="box-text">AdminCLI</text>
+  </g>
+
+  <!-- RepoDetailCLI -->
+  <g filter="url(#shadow)">
+    <rect x="395" y="284" width="190" height="44" rx="8" fill="#8E24AA"/>
+    <text x="490" y="306" class="box-text">RepoDetailCLI</text>
+  </g>
+
+  <!-- Service Layer -->
+  <g filter="url(#shadow)">
+    <rect x="395" y="380" width="190" height="44" rx="8" fill="#FB8C00"/>
+    <text x="490" y="402" class="box-text">Service Layer</text>
+  </g>
+
+  <!-- Validator Layer -->
+  <g filter="url(#shadow)">
+    <rect x="385" y="476" width="210" height="44" rx="8" fill="#FDD835"/>
+    <text x="490" y="498" class="box-text box-text-dark">Validator Layer</text>
+  </g>
+
+  <!-- DAO Layer -->
+  <g filter="url(#shadow)">
+    <rect x="405" y="572" width="170" height="44" rx="8" fill="#00ACC1"/>
+    <text x="490" y="594" class="box-text">DAO Layer</text>
+  </g>
+
+  <!-- DBConnection -->
+  <g filter="url(#shadow)">
+    <rect x="395" y="668" width="190" height="44" rx="8" fill="#43A047"/>
+    <text x="490" y="690" class="box-text">DBConnection</text>
+  </g>
+
+  <!-- PostgreSQL -->
+  <g filter="url(#shadow)">
+    <path d="M405 764 h170 a22 22 0 0 1 0 44 h-170 a22 22 0 0 1 0 -44 z" fill="#E53935"/>
+    <text x="490" y="786" class="box-text">PostgreSQL</text>
+  </g>
+
+  <!-- Arrows -->
+  <path d="M490 64 L490 96" class="line"/>
+  <path d="M490 140 L135 188" class="line"/>
+  <path d="M490 140 L340 188" class="line"/>
+  <path d="M490 140 L545 188" class="line"/>
+  <path d="M490 140 L735 188" class="line"/>
+  <path d="M340 232 L440 284" class="line"/>
+  <path d="M545 232 L540 284" class="line"/>
+  <path d="M135 232 L135 402 L395 402" class="line"/>
+  <path d="M340 232 L340 402 L395 402" class="line"/>
+  <path d="M545 232 L545 402 L585 402" class="line"/>
+  <path d="M735 232 L735 402 L585 402" class="line"/>
+  <path d="M490 328 L490 380" class="line"/>
+  <path d="M490 424 L490 476" class="line"/>
+  <path d="M490 520 L490 572" class="line"/>
+  <path d="M490 616 L490 668" class="line"/>
+  <path d="M490 712 L490 764" class="line"/>
+</svg>
